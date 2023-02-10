@@ -55,7 +55,7 @@ iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement AC
 return_stmt: "return" ';'
 | "return" expression ';'
 ;
-switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt '}'
+switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
 ;
 case_stmts: case_stmts case_stmt
 | /* epsilon */
@@ -133,5 +133,7 @@ ACTION_array: /* epsilon */
 ACTION_print: /* epsilon */
 ;
 ACTION_break: /* epsilon */
+;
+ACTION_callbreak: /* epsilon */
 ;
 %%

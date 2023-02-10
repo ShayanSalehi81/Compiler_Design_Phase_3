@@ -55,7 +55,7 @@ Grammar
    35 return_stmt: "return" ';'
    36            | "return" expression ';'
 
-   37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
 
    38 case_stmts: case_stmts case_stmt
    39           | /* empty */
@@ -133,6 +133,8 @@ Grammar
    82 ACTION_print: /* empty */
 
    83 ACTION_break: /* empty */
+
+   84 ACTION_callbreak: /* empty */
 
 
 Terminals, with rules where they appear
@@ -273,6 +275,8 @@ ACTION_print (81)
     on left: 82, on right: 68
 ACTION_break (82)
     on left: 83, on right: 30
+ACTION_callbreak (83)
+    on left: 84, on right: 37
 
 
 state 0
@@ -672,7 +676,7 @@ state 38
    34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
-   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
    45 var: . ACTION_pid ID
@@ -853,7 +857,7 @@ state 46
 
 state 47
 
-   37 switch_stmt: "switch" . '(' expression ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: "switch" . '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
 
     '('  shift, and go to state 73
 
@@ -1088,7 +1092,7 @@ state 72
 
 state 73
 
-   37 switch_stmt: "switch" '(' . expression ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: "switch" '(' . expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
    45 var: . ACTION_pid ID
@@ -1321,7 +1325,7 @@ state 85
 
 state 86
 
-   37 switch_stmt: "switch" '(' expression . ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: "switch" '(' expression . ')' '{' case_stmts default_stmt '}' ACTION_callbreak
 
     ')'  shift, and go to state 102
 
@@ -1570,7 +1574,7 @@ state 101
 
 state 102
 
-   37 switch_stmt: "switch" '(' expression ')' . '{' case_stmts default_stmt '}'
+   37 switch_stmt: "switch" '(' expression ')' . '{' case_stmts default_stmt '}' ACTION_callbreak
 
     '{'  shift, and go to state 115
 
@@ -1690,7 +1694,7 @@ state 113
    34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
-   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
    45 var: . ACTION_pid ID
@@ -1754,7 +1758,7 @@ state 114
 
 state 115
 
-   37 switch_stmt: "switch" '(' expression ')' '{' . case_stmts default_stmt '}'
+   37 switch_stmt: "switch" '(' expression ')' '{' . case_stmts default_stmt '}' ACTION_callbreak
    38 case_stmts: . case_stmts case_stmt
    39           | .
 
@@ -1885,7 +1889,7 @@ state 125
    34               | "while" ACTION_label '(' expression ')' ACTION_save . statement ACTION_loopwhile
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
-   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
    45 var: . ACTION_pid ID
@@ -1939,7 +1943,7 @@ state 125
 
 state 126
 
-   37 switch_stmt: "switch" '(' expression ')' '{' case_stmts . default_stmt '}'
+   37 switch_stmt: "switch" '(' expression ')' '{' case_stmts . default_stmt '}' ACTION_callbreak
    38 case_stmts: case_stmts . case_stmt
    40 case_stmt: . "case" ACTION_jumpif ACTION_number NUM ACTION_savecase ':' statement_list
    41 default_stmt: . "default" ACTION_jumpif ':' statement_list
@@ -2034,7 +2038,7 @@ state 135
 
 state 136
 
-   37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt . '}'
+   37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt . '}' ACTION_callbreak
 
     '}'  shift, and go to state 142
 
@@ -2065,7 +2069,7 @@ state 138
    34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
-   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
    45 var: . ACTION_pid ID
@@ -2143,9 +2147,12 @@ state 141
 
 state 142
 
-   37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt '}' .
+   37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt '}' . ACTION_callbreak
+   84 ACTION_callbreak: .
 
-    $default  reduce using rule 37 (switch_stmt)
+    $default  reduce using rule 84 (ACTION_callbreak)
+
+    ACTION_callbreak  go to state 146
 
 
 state 143
@@ -2155,14 +2162,14 @@ state 143
 
     $default  reduce using rule 76 (ACTION_jump)
 
-    ACTION_jump  go to state 146
+    ACTION_jump  go to state 147
 
 
 state 144
 
    40 case_stmt: "case" ACTION_jumpif ACTION_number . NUM ACTION_savecase ':' statement_list
 
-    NUM  shift, and go to state 147
+    NUM  shift, and go to state 148
 
 
 state 145
@@ -2173,27 +2180,34 @@ state 145
 
     $default  reduce using rule 21 (statement_list)
 
-    statement_list  go to state 148
+    statement_list  go to state 149
 
 
 state 146
 
-   33 selection_stmt: "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump . "endif"
+   37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak .
 
-    "endif"  shift, and go to state 149
+    $default  reduce using rule 37 (switch_stmt)
 
 
 state 147
+
+   33 selection_stmt: "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump . "endif"
+
+    "endif"  shift, and go to state 150
+
+
+state 148
 
    40 case_stmt: "case" ACTION_jumpif ACTION_number NUM . ACTION_savecase ':' statement_list
    75 ACTION_savecase: .
 
     $default  reduce using rule 75 (ACTION_savecase)
 
-    ACTION_savecase  go to state 150
+    ACTION_savecase  go to state 151
 
 
-state 148
+state 149
 
    17 compound_stmt: . '{' local_declarations statement_list '}'
    20 statement_list: statement_list . statement
@@ -2212,7 +2226,7 @@ state 148
    34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
-   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
    41 default_stmt: "default" ACTION_jumpif ':' statement_list .  ['}']
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
@@ -2266,21 +2280,21 @@ state 148
     ACTION_number        go to state 65
 
 
-state 149
+state 150
 
    33 selection_stmt: "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif" .
 
     $default  reduce using rule 33 (selection_stmt)
 
 
-state 150
+state 151
 
    40 case_stmt: "case" ACTION_jumpif ACTION_number NUM ACTION_savecase . ':' statement_list
 
-    ':'  shift, and go to state 151
+    ':'  shift, and go to state 152
 
 
-state 151
+state 152
 
    20 statement_list: . statement_list statement
    21               | .
@@ -2288,10 +2302,10 @@ state 151
 
     $default  reduce using rule 21 (statement_list)
 
-    statement_list  go to state 152
+    statement_list  go to state 153
 
 
-state 152
+state 153
 
    17 compound_stmt: . '{' local_declarations statement_list '}'
    20 statement_list: statement_list . statement
@@ -2310,7 +2324,7 @@ state 152
    34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
-   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}'
+   37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
    40 case_stmt: "case" ACTION_jumpif ACTION_number NUM ACTION_savecase ':' statement_list .  ['}', "case", "default"]
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression

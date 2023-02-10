@@ -63,94 +63,41 @@ program
 │               │           ├── (SYMBOL, {)
 │               │           ├── case_stmts
 │               │           │   ├── case_stmts
-│               │           │   │   ├── case_stmts
-│               │           │   │   │   ├── case_stmts
-│               │           │   │   │   │   └── epsilon
-│               │           │   │   │   └── case_stmt
-│               │           │   │   │       ├── (KEYWORD, case)
-│               │           │   │   │       ├── ACTION_jumpif
-│               │           │   │   │       │   └── epsilon
-│               │           │   │   │       ├── ACTION_number
-│               │           │   │   │       │   └── epsilon
-│               │           │   │   │       ├── (NUM, 1)
-│               │           │   │   │       ├── ACTION_savecase
-│               │           │   │   │       │   └── epsilon
-│               │           │   │   │       ├── (SYMBOL, :)
-│               │           │   │   │       └── statement_list
-│               │           │   │   │           ├── statement_list
-│               │           │   │   │           │   └── epsilon
-│               │           │   │   │           └── statement
-│               │           │   │   │               └── output_stmt
-│               │           │   │   │                   ├── (KEYWORD, output)
-│               │           │   │   │                   ├── (SYMBOL, ()
-│               │           │   │   │                   ├── expression
-│               │           │   │   │                   │   └── simple_expression
-│               │           │   │   │                   │       └── additive_expression
-│               │           │   │   │                   │           └── term
-│               │           │   │   │                   │               └── factor
-│               │           │   │   │                   │                   ├── ACTION_number
-│               │           │   │   │                   │                   │   └── epsilon
-│               │           │   │   │                   │                   └── (NUM, 1)
-│               │           │   │   │                   ├── (SYMBOL, ))
-│               │           │   │   │                   ├── ACTION_print
-│               │           │   │   │                   │   └── epsilon
-│               │           │   │   │                   └── (SYMBOL, ;)
-│               │           │   │   └── case_stmt
-│               │           │   │       ├── (KEYWORD, case)
-│               │           │   │       ├── ACTION_jumpif
-│               │           │   │       │   └── epsilon
-│               │           │   │       ├── ACTION_number
-│               │           │   │       │   └── epsilon
-│               │           │   │       ├── (NUM, 4)
-│               │           │   │       ├── ACTION_savecase
-│               │           │   │       │   └── epsilon
-│               │           │   │       ├── (SYMBOL, :)
-│               │           │   │       └── statement_list
-│               │           │   │           ├── statement_list
-│               │           │   │           │   └── epsilon
-│               │           │   │           └── statement
-│               │           │   │               └── output_stmt
-│               │           │   │                   ├── (KEYWORD, output)
-│               │           │   │                   ├── (SYMBOL, ()
-│               │           │   │                   ├── expression
-│               │           │   │                   │   └── simple_expression
-│               │           │   │                   │       └── additive_expression
-│               │           │   │                   │           └── term
-│               │           │   │                   │               └── factor
-│               │           │   │                   │                   ├── ACTION_number
-│               │           │   │                   │                   │   └── epsilon
-│               │           │   │                   │                   └── (NUM, 4)
-│               │           │   │                   ├── (SYMBOL, ))
-│               │           │   │                   ├── ACTION_print
-│               │           │   │                   │   └── epsilon
-│               │           │   │                   └── (SYMBOL, ;)
+│               │           │   │   └── epsilon
 │               │           │   └── case_stmt
 │               │           │       ├── (KEYWORD, case)
 │               │           │       ├── ACTION_jumpif
 │               │           │       │   └── epsilon
 │               │           │       ├── ACTION_number
 │               │           │       │   └── epsilon
-│               │           │       ├── (NUM, 4)
+│               │           │       ├── (NUM, 1)
 │               │           │       ├── ACTION_savecase
 │               │           │       │   └── epsilon
 │               │           │       ├── (SYMBOL, :)
 │               │           │       └── statement_list
 │               │           │           ├── statement_list
-│               │           │           │   └── epsilon
+│               │           │           │   ├── statement_list
+│               │           │           │   │   └── epsilon
+│               │           │           │   └── statement
+│               │           │           │       └── output_stmt
+│               │           │           │           ├── (KEYWORD, output)
+│               │           │           │           ├── (SYMBOL, ()
+│               │           │           │           ├── expression
+│               │           │           │           │   └── simple_expression
+│               │           │           │           │       └── additive_expression
+│               │           │           │           │           └── term
+│               │           │           │           │               └── factor
+│               │           │           │           │                   ├── ACTION_number
+│               │           │           │           │                   │   └── epsilon
+│               │           │           │           │                   └── (NUM, 1)
+│               │           │           │           ├── (SYMBOL, ))
+│               │           │           │           ├── ACTION_print
+│               │           │           │           │   └── epsilon
+│               │           │           │           └── (SYMBOL, ;)
 │               │           │           └── statement
-│               │           │               └── output_stmt
-│               │           │                   ├── (KEYWORD, output)
-│               │           │                   ├── (SYMBOL, ()
-│               │           │                   ├── expression
-│               │           │                   │   └── simple_expression
-│               │           │                   │       └── additive_expression
-│               │           │                   │           └── term
-│               │           │                   │               └── factor
-│               │           │                   │                   ├── ACTION_number
-│               │           │                   │                   │   └── epsilon
-│               │           │                   │                   └── (NUM, 40)
-│               │           │                   ├── (SYMBOL, ))
-│               │           │                   ├── ACTION_print
+│               │           │               └── expression_stmt
+│               │           │                   ├── (KEYWORD, break)
+│               │           │                   ├── ACTION_break
 │               │           │                   │   └── epsilon
 │               │           │                   └── (SYMBOL, ;)
 │               │           ├── default_stmt
@@ -178,6 +125,8 @@ program
 │               │           │               ├── ACTION_print
 │               │           │               │   └── epsilon
 │               │           │               └── (SYMBOL, ;)
-│               │           └── (SYMBOL, })
+│               │           ├── (SYMBOL, })
+│               │           └── ACTION_callbreak
+│               │               └── epsilon
 │               └── (SYMBOL, })
 └── $

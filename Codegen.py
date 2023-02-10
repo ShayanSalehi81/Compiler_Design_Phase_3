@@ -26,9 +26,11 @@ class Codegen:
         elif input == "ACTION_array": self.action_array()
         elif input == "ACTION_print": self.action_print()
         elif input == "ACTION_break": self.action_break()
+        elif input == "ACTION_callbreak": self.action_callbreak()
         print(current_token, end='#')
         print(self.scope_stack, end='#')
-        print(self.current_address)
+        print(self.current_address, end='#')
+        print(self.pointer)
 
     def action_assign(self):
         self.program_block[self.pointer] = "(ASSIGN, " + str(self.scope_stack.pop()) + ", " + str(self.scope_stack.pop()) + ",   )"
@@ -122,7 +124,12 @@ class Codegen:
         self.move_pointer()
 
     def action_break(self):
-        pass
+        self.scope_stack.insert(0, self.pointer)
+        self.move_pointer()
+
+    def action_callbreak(self):
+        if self.scope_stack[0] >= 500: return
+        self.program_block[self.scope_stack[0]] = "(JP, " + str(self.pointer) + ",  ,   )"
 
     def find_address(self):
         if self.current_word in self.symbol_table.keys(): return self.symbol_table[self.current_word]
