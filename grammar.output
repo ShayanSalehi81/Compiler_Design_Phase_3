@@ -43,14 +43,14 @@ Grammar
    27          | switch_stmt
    28          | output_stmt
 
-   29 expression_stmt: expression ';'
+   29 expression_stmt: expression ';' ACTION_clearassign
    30                | "break" ACTION_break ';'
    31                | ';'
 
    32 selection_stmt: "if" '(' expression ')' ACTION_save statement "endif" ACTION_jumpif
    33               | "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
 
-   34 iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
 
    35 return_stmt: "return" ';'
    36            | "return" expression ';'
@@ -135,6 +135,8 @@ Grammar
    83 ACTION_break: /* empty */
 
    84 ACTION_callbreak: /* empty */
+
+   85 ACTION_clearassign: /* empty */
 
 
 Terminals, with rules where they appear
@@ -276,7 +278,9 @@ ACTION_print (81)
 ACTION_break (82)
     on left: 83, on right: 30
 ACTION_callbreak (83)
-    on left: 84, on right: 37
+    on left: 84, on right: 34 37
+ACTION_clearassign (84)
+    on left: 85, on right: 29
 
 
 state 0
@@ -668,12 +672,12 @@ state 38
    26          | . return_stmt
    27          | . switch_stmt
    28          | . output_stmt
-   29 expression_stmt: . expression ';'
+   29 expression_stmt: . expression ';' ACTION_clearassign
    30                | . "break" ACTION_break ';'
    31                | . ';'
    32 selection_stmt: . "if" '(' expression ')' ACTION_save statement "endif" ACTION_jumpif
    33               | . "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
-   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
    37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
@@ -808,7 +812,7 @@ state 44
 
 state 45
 
-   34 iteration_stmt: "while" . ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: "while" . ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
    73 ACTION_label: .
 
     $default  reduce using rule 73 (ACTION_label)
@@ -920,7 +924,7 @@ state 55
 
 state 56
 
-   29 expression_stmt: expression . ';'
+   29 expression_stmt: expression . ';' ACTION_clearassign
 
     ';'  shift, and go to state 75
 
@@ -1071,7 +1075,7 @@ state 69
 
 state 70
 
-   34 iteration_stmt: "while" ACTION_label . '(' expression ')' ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: "while" ACTION_label . '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
 
     '('  shift, and go to state 84
 
@@ -1166,9 +1170,12 @@ state 74
 
 state 75
 
-   29 expression_stmt: expression ';' .
+   29 expression_stmt: expression ';' . ACTION_clearassign
+   85 ACTION_clearassign: .
 
-    $default  reduce using rule 29 (expression_stmt)
+    $default  reduce using rule 85 (ACTION_clearassign)
+
+    ACTION_clearassign  go to state 88
 
 
 state 76
@@ -1197,7 +1204,7 @@ state 76
     NUM       reduce using rule 71 (ACTION_number)
     $default  reduce using rule 70 (ACTION_pid)
 
-    expression           go to state 88
+    expression           go to state 89
     var                  go to state 57
     simple_expression    go to state 58
     additive_expression  go to state 59
@@ -1217,13 +1224,13 @@ state 77
    53 addop: . '+'
    54      | . '-'
 
-    '<'   shift, and go to state 89
-    "=="  shift, and go to state 90
-    '+'   shift, and go to state 91
-    '-'   shift, and go to state 92
+    '<'   shift, and go to state 90
+    "=="  shift, and go to state 91
+    '+'   shift, and go to state 92
+    '-'   shift, and go to state 93
 
-    relop  go to state 93
-    addop  go to state 94
+    relop  go to state 94
+    addop  go to state 95
 
 
 state 78
@@ -1232,10 +1239,10 @@ state 78
    57 mulop: . '*'
    58      | . '/'
 
-    '*'  shift, and go to state 95
-    '/'  shift, and go to state 96
+    '*'  shift, and go to state 96
+    '/'  shift, and go to state 97
 
-    mulop  go to state 97
+    mulop  go to state 98
 
 
 state 79
@@ -1244,8 +1251,8 @@ state 79
    46    | ACTION_pid ID . '[' expression ']' ACTION_array
    63 call: ACTION_pid ID . '(' args ')'
 
-    '['  shift, and go to state 98
-    '('  shift, and go to state 99
+    '['  shift, and go to state 99
+    '('  shift, and go to state 100
 
     $default  reduce using rule 45 (var)
 
@@ -1276,12 +1283,12 @@ state 83
    32 selection_stmt: "if" '(' expression . ')' ACTION_save statement "endif" ACTION_jumpif
    33               | "if" '(' expression . ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
 
-    ')'  shift, and go to state 100
+    ')'  shift, and go to state 101
 
 
 state 84
 
-   34 iteration_stmt: "while" ACTION_label '(' . expression ')' ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: "while" ACTION_label '(' . expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
    45 var: . ACTION_pid ID
@@ -1305,7 +1312,7 @@ state 84
     NUM       reduce using rule 71 (ACTION_number)
     $default  reduce using rule 70 (ACTION_pid)
 
-    expression           go to state 101
+    expression           go to state 102
     var                  go to state 57
     simple_expression    go to state 58
     additive_expression  go to state 59
@@ -1327,55 +1334,62 @@ state 86
 
    37 switch_stmt: "switch" '(' expression . ')' '{' case_stmts default_stmt '}' ACTION_callbreak
 
-    ')'  shift, and go to state 102
+    ')'  shift, and go to state 103
 
 
 state 87
 
    68 output_stmt: "output" '(' expression . ')' ACTION_print ';'
 
-    ')'  shift, and go to state 103
+    ')'  shift, and go to state 104
 
 
 state 88
+
+   29 expression_stmt: expression ';' ACTION_clearassign .
+
+    $default  reduce using rule 29 (expression_stmt)
+
+
+state 89
 
    43 expression: var '=' expression . ACTION_assign
    69 ACTION_assign: .
 
     $default  reduce using rule 69 (ACTION_assign)
 
-    ACTION_assign  go to state 104
+    ACTION_assign  go to state 105
 
 
-state 89
+state 90
 
    49 relop: '<' .
 
     $default  reduce using rule 49 (relop)
 
 
-state 90
+state 91
 
    50 relop: "==" .
 
     $default  reduce using rule 50 (relop)
 
 
-state 91
+state 92
 
    53 addop: '+' .
 
     $default  reduce using rule 53 (addop)
 
 
-state 92
+state 93
 
    54 addop: '-' .
 
     $default  reduce using rule 54 (addop)
 
 
-state 93
+state 94
 
    45 var: . ACTION_pid ID
    46    | . ACTION_pid ID '[' expression ']' ACTION_array
@@ -1397,8 +1411,8 @@ state 93
     NUM       reduce using rule 71 (ACTION_number)
     $default  reduce using rule 70 (ACTION_pid)
 
-    var                  go to state 105
-    additive_expression  go to state 106
+    var                  go to state 106
+    additive_expression  go to state 107
     term                 go to state 60
     factor               go to state 61
     call                 go to state 62
@@ -1406,7 +1420,7 @@ state 93
     ACTION_number        go to state 65
 
 
-state 94
+state 95
 
    45 var: . ACTION_pid ID
    46    | . ACTION_pid ID '[' expression ']' ACTION_array
@@ -1426,29 +1440,29 @@ state 94
     NUM       reduce using rule 71 (ACTION_number)
     $default  reduce using rule 70 (ACTION_pid)
 
-    var            go to state 105
-    term           go to state 107
+    var            go to state 106
+    term           go to state 108
     factor         go to state 61
     call           go to state 62
     ACTION_pid     go to state 64
     ACTION_number  go to state 65
 
 
-state 95
+state 96
 
    57 mulop: '*' .
 
     $default  reduce using rule 57 (mulop)
 
 
-state 96
+state 97
 
    58 mulop: '/' .
 
     $default  reduce using rule 58 (mulop)
 
 
-state 97
+state 98
 
    45 var: . ACTION_pid ID
    46    | . ACTION_pid ID '[' expression ']' ACTION_array
@@ -1466,14 +1480,14 @@ state 97
     NUM       reduce using rule 71 (ACTION_number)
     $default  reduce using rule 70 (ACTION_pid)
 
-    var            go to state 105
-    factor         go to state 108
+    var            go to state 106
+    factor         go to state 109
     call           go to state 62
     ACTION_pid     go to state 64
     ACTION_number  go to state 65
 
 
-state 98
+state 99
 
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
@@ -1499,7 +1513,7 @@ state 98
     NUM       reduce using rule 71 (ACTION_number)
     $default  reduce using rule 70 (ACTION_pid)
 
-    expression           go to state 109
+    expression           go to state 110
     var                  go to state 57
     simple_expression    go to state 58
     additive_expression  go to state 59
@@ -1510,7 +1524,7 @@ state 98
     ACTION_number        go to state 65
 
 
-state 99
+state 100
 
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
@@ -1541,20 +1555,20 @@ state 99
     ID        reduce using rule 70 (ACTION_pid)
     $default  reduce using rule 65 (args)
 
-    expression           go to state 110
+    expression           go to state 111
     var                  go to state 57
     simple_expression    go to state 58
     additive_expression  go to state 59
     term                 go to state 60
     factor               go to state 61
     call                 go to state 62
-    args                 go to state 111
-    arg_list             go to state 112
+    args                 go to state 112
+    arg_list             go to state 113
     ACTION_pid           go to state 64
     ACTION_number        go to state 65
 
 
-state 100
+state 101
 
    32 selection_stmt: "if" '(' expression ')' . ACTION_save statement "endif" ACTION_jumpif
    33               | "if" '(' expression ')' . ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
@@ -1562,48 +1576,48 @@ state 100
 
     $default  reduce using rule 72 (ACTION_save)
 
-    ACTION_save  go to state 113
-
-
-state 101
-
-   34 iteration_stmt: "while" ACTION_label '(' expression . ')' ACTION_save statement ACTION_loopwhile
-
-    ')'  shift, and go to state 114
+    ACTION_save  go to state 114
 
 
 state 102
 
-   37 switch_stmt: "switch" '(' expression ')' . '{' case_stmts default_stmt '}' ACTION_callbreak
+   34 iteration_stmt: "while" ACTION_label '(' expression . ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
 
-    '{'  shift, and go to state 115
+    ')'  shift, and go to state 115
 
 
 state 103
+
+   37 switch_stmt: "switch" '(' expression ')' . '{' case_stmts default_stmt '}' ACTION_callbreak
+
+    '{'  shift, and go to state 116
+
+
+state 104
 
    68 output_stmt: "output" '(' expression ')' . ACTION_print ';'
    82 ACTION_print: .
 
     $default  reduce using rule 82 (ACTION_print)
 
-    ACTION_print  go to state 116
+    ACTION_print  go to state 117
 
 
-state 104
+state 105
 
    43 expression: var '=' expression ACTION_assign .
 
     $default  reduce using rule 43 (expression)
 
 
-state 105
+state 106
 
    60 factor: var .
 
     $default  reduce using rule 60 (factor)
 
 
-state 106
+state 107
 
    47 simple_expression: additive_expression ACTION_sign relop additive_expression . ACTION_op
    51 additive_expression: additive_expression . ACTION_sign addop term ACTION_op
@@ -1614,11 +1628,11 @@ state 106
     '-'       reduce using rule 79 (ACTION_sign)
     $default  reduce using rule 78 (ACTION_op)
 
-    ACTION_op    go to state 117
-    ACTION_sign  go to state 118
+    ACTION_op    go to state 118
+    ACTION_sign  go to state 119
 
 
-state 107
+state 108
 
    51 additive_expression: additive_expression ACTION_sign addop term . ACTION_op
    55 term: term . ACTION_sign mulop factor ACTION_op
@@ -1629,52 +1643,52 @@ state 107
     '/'       reduce using rule 79 (ACTION_sign)
     $default  reduce using rule 78 (ACTION_op)
 
-    ACTION_op    go to state 119
+    ACTION_op    go to state 120
     ACTION_sign  go to state 78
 
 
-state 108
+state 109
 
    55 term: term ACTION_sign mulop factor . ACTION_op
    78 ACTION_op: .
 
     $default  reduce using rule 78 (ACTION_op)
 
-    ACTION_op  go to state 120
-
-
-state 109
-
-   46 var: ACTION_pid ID '[' expression . ']' ACTION_array
-
-    ']'  shift, and go to state 121
+    ACTION_op  go to state 121
 
 
 state 110
+
+   46 var: ACTION_pid ID '[' expression . ']' ACTION_array
+
+    ']'  shift, and go to state 122
+
+
+state 111
 
    67 arg_list: expression .
 
     $default  reduce using rule 67 (arg_list)
 
 
-state 111
+state 112
 
    63 call: ACTION_pid ID '(' args . ')'
 
-    ')'  shift, and go to state 122
+    ')'  shift, and go to state 123
 
 
-state 112
+state 113
 
    64 args: arg_list .  [')']
    66 arg_list: arg_list . ',' expression
 
-    ','  shift, and go to state 123
+    ','  shift, and go to state 124
 
     $default  reduce using rule 64 (args)
 
 
-state 113
+state 114
 
    17 compound_stmt: . '{' local_declarations statement_list '}'
    22 statement: . expression_stmt
@@ -1684,14 +1698,14 @@ state 113
    26          | . return_stmt
    27          | . switch_stmt
    28          | . output_stmt
-   29 expression_stmt: . expression ';'
+   29 expression_stmt: . expression ';' ACTION_clearassign
    30                | . "break" ACTION_break ';'
    31                | . ';'
    32 selection_stmt: . "if" '(' expression ')' ACTION_save statement "endif" ACTION_jumpif
    32               | "if" '(' expression ')' ACTION_save . statement "endif" ACTION_jumpif
    33               | . "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
    33               | "if" '(' expression ')' ACTION_save . statement "else" ACTION_savejump statement ACTION_jump "endif"
-   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
    37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
@@ -1728,7 +1742,7 @@ state 113
     $default  reduce using rule 70 (ACTION_pid)
 
     compound_stmt        go to state 49
-    statement            go to state 124
+    statement            go to state 125
     expression_stmt      go to state 51
     selection_stmt       go to state 52
     iteration_stmt       go to state 53
@@ -1746,17 +1760,17 @@ state 113
     ACTION_number        go to state 65
 
 
-state 114
+state 115
 
-   34 iteration_stmt: "while" ACTION_label '(' expression ')' . ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: "while" ACTION_label '(' expression ')' . ACTION_save statement ACTION_loopwhile ACTION_callbreak
    72 ACTION_save: .
 
     $default  reduce using rule 72 (ACTION_save)
 
-    ACTION_save  go to state 125
+    ACTION_save  go to state 126
 
 
-state 115
+state 116
 
    37 switch_stmt: "switch" '(' expression ')' '{' . case_stmts default_stmt '}' ACTION_callbreak
    38 case_stmts: . case_stmts case_stmt
@@ -1764,67 +1778,67 @@ state 115
 
     $default  reduce using rule 39 (case_stmts)
 
-    case_stmts  go to state 126
-
-
-state 116
-
-   68 output_stmt: "output" '(' expression ')' ACTION_print . ';'
-
-    ';'  shift, and go to state 127
+    case_stmts  go to state 127
 
 
 state 117
+
+   68 output_stmt: "output" '(' expression ')' ACTION_print . ';'
+
+    ';'  shift, and go to state 128
+
+
+state 118
 
    47 simple_expression: additive_expression ACTION_sign relop additive_expression ACTION_op .
 
     $default  reduce using rule 47 (simple_expression)
 
 
-state 118
+state 119
 
    51 additive_expression: additive_expression ACTION_sign . addop term ACTION_op
    53 addop: . '+'
    54      | . '-'
 
-    '+'  shift, and go to state 91
-    '-'  shift, and go to state 92
+    '+'  shift, and go to state 92
+    '-'  shift, and go to state 93
 
-    addop  go to state 94
+    addop  go to state 95
 
 
-state 119
+state 120
 
    51 additive_expression: additive_expression ACTION_sign addop term ACTION_op .
 
     $default  reduce using rule 51 (additive_expression)
 
 
-state 120
+state 121
 
    55 term: term ACTION_sign mulop factor ACTION_op .
 
     $default  reduce using rule 55 (term)
 
 
-state 121
+state 122
 
    46 var: ACTION_pid ID '[' expression ']' . ACTION_array
    81 ACTION_array: .
 
     $default  reduce using rule 81 (ACTION_array)
 
-    ACTION_array  go to state 128
+    ACTION_array  go to state 129
 
 
-state 122
+state 123
 
    63 call: ACTION_pid ID '(' args ')' .
 
     $default  reduce using rule 63 (call)
 
 
-state 123
+state 124
 
    43 expression: . var '=' expression ACTION_assign
    44           | . simple_expression
@@ -1850,7 +1864,7 @@ state 123
     NUM       reduce using rule 71 (ACTION_number)
     $default  reduce using rule 70 (ACTION_pid)
 
-    expression           go to state 129
+    expression           go to state 130
     var                  go to state 57
     simple_expression    go to state 58
     additive_expression  go to state 59
@@ -1861,16 +1875,16 @@ state 123
     ACTION_number        go to state 65
 
 
-state 124
+state 125
 
    32 selection_stmt: "if" '(' expression ')' ACTION_save statement . "endif" ACTION_jumpif
    33               | "if" '(' expression ')' ACTION_save statement . "else" ACTION_savejump statement ACTION_jump "endif"
 
-    "endif"  shift, and go to state 130
-    "else"   shift, and go to state 131
+    "endif"  shift, and go to state 131
+    "else"   shift, and go to state 132
 
 
-state 125
+state 126
 
    17 compound_stmt: . '{' local_declarations statement_list '}'
    22 statement: . expression_stmt
@@ -1880,13 +1894,13 @@ state 125
    26          | . return_stmt
    27          | . switch_stmt
    28          | . output_stmt
-   29 expression_stmt: . expression ';'
+   29 expression_stmt: . expression ';' ACTION_clearassign
    30                | . "break" ACTION_break ';'
    31                | . ';'
    32 selection_stmt: . "if" '(' expression ')' ACTION_save statement "endif" ACTION_jumpif
    33               | . "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
-   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
-   34               | "while" ACTION_label '(' expression ')' ACTION_save . statement ACTION_loopwhile
+   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
+   34               | "while" ACTION_label '(' expression ')' ACTION_save . statement ACTION_loopwhile ACTION_callbreak
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
    37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
@@ -1923,7 +1937,7 @@ state 125
     $default  reduce using rule 70 (ACTION_pid)
 
     compound_stmt        go to state 49
-    statement            go to state 132
+    statement            go to state 133
     expression_stmt      go to state 51
     selection_stmt       go to state 52
     iteration_stmt       go to state 53
@@ -1941,7 +1955,7 @@ state 125
     ACTION_number        go to state 65
 
 
-state 126
+state 127
 
    37 switch_stmt: "switch" '(' expression ')' '{' case_stmts . default_stmt '}' ACTION_callbreak
    38 case_stmts: case_stmts . case_stmt
@@ -1949,79 +1963,69 @@ state 126
    41 default_stmt: . "default" ACTION_jumpif ':' statement_list
    42             | .  ['}']
 
-    "case"     shift, and go to state 133
-    "default"  shift, and go to state 134
+    "case"     shift, and go to state 134
+    "default"  shift, and go to state 135
 
     $default  reduce using rule 42 (default_stmt)
 
-    case_stmt     go to state 135
-    default_stmt  go to state 136
+    case_stmt     go to state 136
+    default_stmt  go to state 137
 
 
-state 127
+state 128
 
    68 output_stmt: "output" '(' expression ')' ACTION_print ';' .
 
     $default  reduce using rule 68 (output_stmt)
 
 
-state 128
+state 129
 
    46 var: ACTION_pid ID '[' expression ']' ACTION_array .
 
     $default  reduce using rule 46 (var)
 
 
-state 129
+state 130
 
    66 arg_list: arg_list ',' expression .
 
     $default  reduce using rule 66 (arg_list)
 
 
-state 130
+state 131
 
    32 selection_stmt: "if" '(' expression ')' ACTION_save statement "endif" . ACTION_jumpif
    80 ACTION_jumpif: .
 
     $default  reduce using rule 80 (ACTION_jumpif)
 
-    ACTION_jumpif  go to state 137
+    ACTION_jumpif  go to state 138
 
 
-state 131
+state 132
 
    33 selection_stmt: "if" '(' expression ')' ACTION_save statement "else" . ACTION_savejump statement ACTION_jump "endif"
    74 ACTION_savejump: .
 
     $default  reduce using rule 74 (ACTION_savejump)
 
-    ACTION_savejump  go to state 138
-
-
-state 132
-
-   34 iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement . ACTION_loopwhile
-   77 ACTION_loopwhile: .
-
-    $default  reduce using rule 77 (ACTION_loopwhile)
-
-    ACTION_loopwhile  go to state 139
+    ACTION_savejump  go to state 139
 
 
 state 133
 
-   40 case_stmt: "case" . ACTION_jumpif ACTION_number NUM ACTION_savecase ':' statement_list
-   80 ACTION_jumpif: .
+   34 iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement . ACTION_loopwhile ACTION_callbreak
+   77 ACTION_loopwhile: .
 
-    $default  reduce using rule 80 (ACTION_jumpif)
+    $default  reduce using rule 77 (ACTION_loopwhile)
 
-    ACTION_jumpif  go to state 140
+    ACTION_loopwhile  go to state 140
 
 
 state 134
 
-   41 default_stmt: "default" . ACTION_jumpif ':' statement_list
+   40 case_stmt: "case" . ACTION_jumpif ACTION_number NUM ACTION_savecase ':' statement_list
    80 ACTION_jumpif: .
 
     $default  reduce using rule 80 (ACTION_jumpif)
@@ -2031,26 +2035,36 @@ state 134
 
 state 135
 
+   41 default_stmt: "default" . ACTION_jumpif ':' statement_list
+   80 ACTION_jumpif: .
+
+    $default  reduce using rule 80 (ACTION_jumpif)
+
+    ACTION_jumpif  go to state 142
+
+
+state 136
+
    38 case_stmts: case_stmts case_stmt .
 
     $default  reduce using rule 38 (case_stmts)
 
 
-state 136
+state 137
 
    37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt . '}' ACTION_callbreak
 
-    '}'  shift, and go to state 142
+    '}'  shift, and go to state 143
 
 
-state 137
+state 138
 
    32 selection_stmt: "if" '(' expression ')' ACTION_save statement "endif" ACTION_jumpif .
 
     $default  reduce using rule 32 (selection_stmt)
 
 
-state 138
+state 139
 
    17 compound_stmt: . '{' local_declarations statement_list '}'
    22 statement: . expression_stmt
@@ -2060,13 +2074,13 @@ state 138
    26          | . return_stmt
    27          | . switch_stmt
    28          | . output_stmt
-   29 expression_stmt: . expression ';'
+   29 expression_stmt: . expression ';' ACTION_clearassign
    30                | . "break" ACTION_break ';'
    31                | . ';'
    32 selection_stmt: . "if" '(' expression ')' ACTION_save statement "endif" ACTION_jumpif
    33               | . "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
    33               | "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump . statement ACTION_jump "endif"
-   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
    37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
@@ -2103,7 +2117,7 @@ state 138
     $default  reduce using rule 70 (ACTION_pid)
 
     compound_stmt        go to state 49
-    statement            go to state 143
+    statement            go to state 144
     expression_stmt      go to state 51
     selection_stmt       go to state 52
     iteration_stmt       go to state 53
@@ -2121,58 +2135,68 @@ state 138
     ACTION_number        go to state 65
 
 
-state 139
-
-   34 iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile .
-
-    $default  reduce using rule 34 (iteration_stmt)
-
-
 state 140
+
+   34 iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile . ACTION_callbreak
+   84 ACTION_callbreak: .
+
+    $default  reduce using rule 84 (ACTION_callbreak)
+
+    ACTION_callbreak  go to state 145
+
+
+state 141
 
    40 case_stmt: "case" ACTION_jumpif . ACTION_number NUM ACTION_savecase ':' statement_list
    71 ACTION_number: .
 
     $default  reduce using rule 71 (ACTION_number)
 
-    ACTION_number  go to state 144
-
-
-state 141
-
-   41 default_stmt: "default" ACTION_jumpif . ':' statement_list
-
-    ':'  shift, and go to state 145
+    ACTION_number  go to state 146
 
 
 state 142
+
+   41 default_stmt: "default" ACTION_jumpif . ':' statement_list
+
+    ':'  shift, and go to state 147
+
+
+state 143
 
    37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt '}' . ACTION_callbreak
    84 ACTION_callbreak: .
 
     $default  reduce using rule 84 (ACTION_callbreak)
 
-    ACTION_callbreak  go to state 146
+    ACTION_callbreak  go to state 148
 
 
-state 143
+state 144
 
    33 selection_stmt: "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement . ACTION_jump "endif"
    76 ACTION_jump: .
 
     $default  reduce using rule 76 (ACTION_jump)
 
-    ACTION_jump  go to state 147
-
-
-state 144
-
-   40 case_stmt: "case" ACTION_jumpif ACTION_number . NUM ACTION_savecase ':' statement_list
-
-    NUM  shift, and go to state 148
+    ACTION_jump  go to state 149
 
 
 state 145
+
+   34 iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak .
+
+    $default  reduce using rule 34 (iteration_stmt)
+
+
+state 146
+
+   40 case_stmt: "case" ACTION_jumpif ACTION_number . NUM ACTION_savecase ':' statement_list
+
+    NUM  shift, and go to state 150
+
+
+state 147
 
    20 statement_list: . statement_list statement
    21               | .
@@ -2180,34 +2204,34 @@ state 145
 
     $default  reduce using rule 21 (statement_list)
 
-    statement_list  go to state 149
+    statement_list  go to state 151
 
 
-state 146
+state 148
 
    37 switch_stmt: "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak .
 
     $default  reduce using rule 37 (switch_stmt)
 
 
-state 147
+state 149
 
    33 selection_stmt: "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump . "endif"
 
-    "endif"  shift, and go to state 150
+    "endif"  shift, and go to state 152
 
 
-state 148
+state 150
 
    40 case_stmt: "case" ACTION_jumpif ACTION_number NUM . ACTION_savecase ':' statement_list
    75 ACTION_savecase: .
 
     $default  reduce using rule 75 (ACTION_savecase)
 
-    ACTION_savecase  go to state 151
+    ACTION_savecase  go to state 153
 
 
-state 149
+state 151
 
    17 compound_stmt: . '{' local_declarations statement_list '}'
    20 statement_list: statement_list . statement
@@ -2218,12 +2242,12 @@ state 149
    26          | . return_stmt
    27          | . switch_stmt
    28          | . output_stmt
-   29 expression_stmt: . expression ';'
+   29 expression_stmt: . expression ';' ACTION_clearassign
    30                | . "break" ACTION_break ';'
    31                | . ';'
    32 selection_stmt: . "if" '(' expression ')' ACTION_save statement "endif" ACTION_jumpif
    33               | . "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
-   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
    37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak
@@ -2280,21 +2304,21 @@ state 149
     ACTION_number        go to state 65
 
 
-state 150
+state 152
 
    33 selection_stmt: "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif" .
 
     $default  reduce using rule 33 (selection_stmt)
 
 
-state 151
+state 153
 
    40 case_stmt: "case" ACTION_jumpif ACTION_number NUM ACTION_savecase . ':' statement_list
 
-    ':'  shift, and go to state 152
+    ':'  shift, and go to state 154
 
 
-state 152
+state 154
 
    20 statement_list: . statement_list statement
    21               | .
@@ -2302,10 +2326,10 @@ state 152
 
     $default  reduce using rule 21 (statement_list)
 
-    statement_list  go to state 153
+    statement_list  go to state 155
 
 
-state 153
+state 155
 
    17 compound_stmt: . '{' local_declarations statement_list '}'
    20 statement_list: statement_list . statement
@@ -2316,12 +2340,12 @@ state 153
    26          | . return_stmt
    27          | . switch_stmt
    28          | . output_stmt
-   29 expression_stmt: . expression ';'
+   29 expression_stmt: . expression ';' ACTION_clearassign
    30                | . "break" ACTION_break ';'
    31                | . ';'
    32 selection_stmt: . "if" '(' expression ')' ACTION_save statement "endif" ACTION_jumpif
    33               | . "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
-   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
+   34 iteration_stmt: . "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
    35 return_stmt: . "return" ';'
    36            | . "return" expression ';'
    37 switch_stmt: . "switch" '(' expression ')' '{' case_stmts default_stmt '}' ACTION_callbreak

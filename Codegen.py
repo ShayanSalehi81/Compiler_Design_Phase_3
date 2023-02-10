@@ -27,6 +27,7 @@ class Codegen:
         elif input == "ACTION_print": self.action_print()
         elif input == "ACTION_break": self.action_break()
         elif input == "ACTION_callbreak": self.action_callbreak()
+        elif input == "ACTION_clearassign": self.action_clearassign()
         print(current_token, end='#')
         print(self.scope_stack, end='#')
         print(self.current_address, end='#')
@@ -74,7 +75,7 @@ class Codegen:
         self.program_block[self.scope_stack.pop()] = "(JP, " + str(self.pointer) + ",  ,   )"
 
     def action_loopwhile(self):
-        self.program_block[self.scope_stack[-1]] = "(JPF, " + str(self.scope_stack[-2]) + ", " + str(self.point + 1) + ",   )"
+        self.program_block[self.scope_stack[-1]] = "(JPF, " + str(self.scope_stack[-2]) + ", " + str(self.pointer + 1) + ",   )"
         self.program_block[self.pointer] = "(JP, " + str(self.scope_stack[-3]) + ",  ,   )"
         self.scope_stack.pop()
         self.scope_stack.pop()
@@ -130,6 +131,10 @@ class Codegen:
     def action_callbreak(self):
         if self.scope_stack[0] >= 500: return
         self.program_block[self.scope_stack[0]] = "(JP, " + str(self.pointer) + ",  ,   )"
+
+    def action_clearassign(self):
+        # if self.scope_stack[-1] < 500: return
+        self.scope_stack.pop()
 
     def find_address(self):
         if self.current_word in self.symbol_table.keys(): return self.symbol_table[self.current_word]

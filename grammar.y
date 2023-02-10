@@ -43,14 +43,14 @@ statement: expression_stmt
 | switch_stmt
 | output_stmt
 ;
-expression_stmt: expression ';'
+expression_stmt: expression ';' ACTION_clearassign
 | "break" ACTION_break ';'
 | ';'
 ;
 selection_stmt: "if" '(' expression ')' ACTION_save statement "endif" ACTION_jumpif
 | "if" '(' expression ')' ACTION_save statement "else" ACTION_savejump statement ACTION_jump "endif"
 ;
-iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile
+iteration_stmt: "while" ACTION_label '(' expression ')' ACTION_save statement ACTION_loopwhile ACTION_callbreak
 ;
 return_stmt: "return" ';'
 | "return" expression ';'
@@ -135,5 +135,7 @@ ACTION_print: /* epsilon */
 ACTION_break: /* epsilon */
 ;
 ACTION_callbreak: /* epsilon */
+;
+ACTION_clearassign: /* epsilon */
 ;
 %%

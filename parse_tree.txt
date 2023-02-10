@@ -45,7 +45,9 @@ program
 │               │   │           │   │                   └── (NUM, 4)
 │               │   │           │   └── ACTION_assign
 │               │   │           │       └── epsilon
-│               │   │           └── (SYMBOL, ;)
+│               │   │           ├── (SYMBOL, ;)
+│               │   │           └── ACTION_clearassign
+│               │   │               └── epsilon
 │               │   └── statement
 │               │       └── switch_stmt
 │               │           ├── (KEYWORD, switch)
