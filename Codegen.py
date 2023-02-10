@@ -33,7 +33,7 @@ class Codegen:
         print(self.pointer)
 
     def action_assign(self):
-        self.program_block[self.pointer] = "(ASSIGN, " + str(self.scope_stack.pop()) + ", " + str(self.scope_stack.pop()) + ",   )"
+        self.program_block[self.pointer] = "(ASSIGN, " + str(self.scope_stack.pop()) + ", " + str(self.scope_stack[-1]) + ",   )"
         self.move_pointer()
 
     def action_pid(self):
@@ -108,12 +108,12 @@ class Codegen:
     def action_array(self):
         if len(self.scope_stack) != 1:
             self.get_temporary_memory()
-            self.program_block[self.pointer] = "(MULT, " + str(self.scope_stack[-1]) + ", #4, " + str(self.get_temporary_memory) + " )"
+            self.program_block[self.pointer] = "(MULT, " + str(self.scope_stack[-1]) + ", #4, " + str(self.temporary_address) + " )"
             self.move_pointer()
-            self.program_block[self.pointer] = "(ADD, #" + str(self.scope_stack[-2]) + ", " + str(self.get_temporary_memory) + ", " + str(self.get_temporary_memory) + " )"
+            self.program_block[self.pointer] = "(ADD, #" + str(self.scope_stack[-2]) + ", " + str(self.temporary_address) + ", " + str(self.temporary_address) + " )"
             self.scope_stack.pop()
             self.scope_stack.pop()
-            self.scope_stack.append("@" + str(self.get_temporary_memory))
+            self.scope_stack.append("@" + str(self.temporary_address))
             self.move_pointer()
             return
         self.current_address = self.symbol_table[list(self.symbol_table.keys())[-1]] + int(self.scope_stack[-1][1:]) * 4
