@@ -1,17 +1,15 @@
-/* sample 3 */
+/* sample 5 */
 
-void main(void){
-  int day;
-  day = 4;
-
-  switch (day) {
-  case 1:
-    output(1);
-  case 4:
-    output(4);
-  case 4:
-    output(40);
-  default:
-    output(day);
-  }
- }
+void main(void)
+{
+    int i;
+    i = 0;
+    while(i < 5){
+        output(i);
+        i = i + 1;
+        if(i == 3){
+            break;
+        }
+        endif
+    }
+}

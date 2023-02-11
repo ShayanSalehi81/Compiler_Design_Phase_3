@@ -6,6 +6,7 @@ class Codegen:
         self.current_address, self.temporary_address, self.pointer = 508, 508, 2
         for _ in range(200): self.program_block.append("None")
         self.program_block[0], self.program_block[1] = "(ASSIGN, #4, 0,   )", "(JP, 2,  ,   )"
+        self.is_break = 0
 
     def action_choser(self, input, current_token):
         print(input)
@@ -32,6 +33,7 @@ class Codegen:
         print(self.scope_stack, end='#')
         print(self.current_address, end='#')
         print(self.pointer)
+        # print(self.program_block)
 
     def action_assign(self):
         self.program_block[self.pointer] = "(ASSIGN, " + str(self.scope_stack.pop()) + ", " + str(self.scope_stack[-1]) + ",   )"
@@ -84,7 +86,9 @@ class Codegen:
     
     def action_op(self):
         self.get_temporary_memory()
-        static_str = str(self.scope_stack[-3]) + ", " + str(self.scope_stack[-1]) + ", " + str(self.temporary_address) + " )"
+        temp = str(self.scope_stack[-3])
+        if temp.startswith('@'): static_str = str(self.scope_stack[-1]) + ", " + str(self.scope_stack[-3]) + ", " + str(self.temporary_address) + " )"
+        else: static_str = str(self.scope_stack[-3]) + ", " + str(self.scope_stack[-1]) + ", " + str(self.temporary_address) + " )"
         if self.scope_stack[-2] == "-": self.program_block[self.pointer] = "(SUB, " + static_str
         elif self.scope_stack[-2] == "+": self.program_block[self.pointer] = "(ADD, " + static_str
         elif self.scope_stack[-2] == "*": self.program_block[self.pointer] = "(MULT, " + static_str
@@ -127,8 +131,11 @@ class Codegen:
     def action_break(self):
         self.scope_stack.insert(0, self.pointer)
         self.move_pointer()
+        self.is_break = self.is_break + 1
 
     def action_callbreak(self):
+        if self.is_break == 0: return
+        if len(self.scope_stack) == 0: return
         if self.scope_stack[0] >= 500: return
         self.program_block[self.scope_stack[0]] = "(JP, " + str(self.pointer) + ",  ,   )"
 
