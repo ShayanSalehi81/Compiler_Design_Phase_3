@@ -3,7 +3,7 @@ program
 │   └── declaration
 │       └── fun_declaration
 │           ├── type_specifier
-│           │   └── (KEYWORD, void)
+│           │   └── (KEYWORD, int)
 │           ├── ACTION_pid
 │           │   └── epsilon
 │           ├── (ID, main)
@@ -18,42 +18,41 @@ program
 │               │   │   ├── local_declarations
 │               │   │   │   ├── local_declarations
 │               │   │   │   │   ├── local_declarations
-│               │   │   │   │   │   ├── local_declarations
-│               │   │   │   │   │   │   └── epsilon
-│               │   │   │   │   │   └── var_declaration
-│               │   │   │   │   │       ├── type_specifier
-│               │   │   │   │   │       │   └── (KEYWORD, int)
-│               │   │   │   │   │       ├── ACTION_pid
-│               │   │   │   │   │       │   └── epsilon
-│               │   │   │   │   │       ├── (ID, arr)
-│               │   │   │   │   │       ├── (SYMBOL, [)
-│               │   │   │   │   │       ├── ACTION_number
-│               │   │   │   │   │       │   └── epsilon
-│               │   │   │   │   │       ├── (NUM, 20)
-│               │   │   │   │   │       ├── (SYMBOL, ])
-│               │   │   │   │   │       ├── ACTION_array
-│               │   │   │   │   │       │   └── epsilon
-│               │   │   │   │   │       └── (SYMBOL, ;)
+│               │   │   │   │   │   └── epsilon
 │               │   │   │   │   └── var_declaration
 │               │   │   │   │       ├── type_specifier
 │               │   │   │   │       │   └── (KEYWORD, int)
 │               │   │   │   │       ├── ACTION_pid
 │               │   │   │   │       │   └── epsilon
-│               │   │   │   │       ├── (ID, arrsize)
+│               │   │   │   │       ├── (ID, a)
+│               │   │   │   │       ├── (SYMBOL, [)
+│               │   │   │   │       ├── ACTION_number
+│               │   │   │   │       │   └── epsilon
+│               │   │   │   │       ├── (NUM, 2)
+│               │   │   │   │       ├── (SYMBOL, ])
+│               │   │   │   │       ├── ACTION_array
+│               │   │   │   │       │   └── epsilon
 │               │   │   │   │       └── (SYMBOL, ;)
 │               │   │   │   └── var_declaration
 │               │   │   │       ├── type_specifier
 │               │   │   │       │   └── (KEYWORD, int)
 │               │   │   │       ├── ACTION_pid
 │               │   │   │       │   └── epsilon
-│               │   │   │       ├── (ID, i)
+│               │   │   │       ├── (ID, b)
+│               │   │   │       ├── (SYMBOL, [)
+│               │   │   │       ├── ACTION_number
+│               │   │   │       │   └── epsilon
+│               │   │   │       ├── (NUM, 2)
+│               │   │   │       ├── (SYMBOL, ])
+│               │   │   │       ├── ACTION_array
+│               │   │   │       │   └── epsilon
 │               │   │   │       └── (SYMBOL, ;)
 │               │   │   └── var_declaration
 │               │   │       ├── type_specifier
 │               │   │       │   └── (KEYWORD, int)
 │               │   │       ├── ACTION_pid
 │               │   │       │   └── epsilon
-│               │   │       ├── (ID, j)
+│               │   │       ├── (ID, i)
 │               │   │       └── (SYMBOL, ;)
 │               │   └── var_declaration
 │               │       ├── type_specifier
@@ -66,27 +65,415 @@ program
 │               │   ├── statement_list
 │               │   │   ├── statement_list
 │               │   │   │   ├── statement_list
-│               │   │   │   │   └── epsilon
+│               │   │   │   │   ├── statement_list
+│               │   │   │   │   │   ├── statement_list
+│               │   │   │   │   │   │   ├── statement_list
+│               │   │   │   │   │   │   │   ├── statement_list
+│               │   │   │   │   │   │   │   │   ├── statement_list
+│               │   │   │   │   │   │   │   │   │   ├── statement_list
+│               │   │   │   │   │   │   │   │   │   │   ├── statement_list
+│               │   │   │   │   │   │   │   │   │   │   │   └── epsilon
+│               │   │   │   │   │   │   │   │   │   │   └── statement
+│               │   │   │   │   │   │   │   │   │   │       └── expression_stmt
+│               │   │   │   │   │   │   │   │   │   │           ├── expression
+│               │   │   │   │   │   │   │   │   │   │           │   ├── var
+│               │   │   │   │   │   │   │   │   │   │           │   │   ├── ACTION_pid
+│               │   │   │   │   │   │   │   │   │   │           │   │   │   └── epsilon
+│               │   │   │   │   │   │   │   │   │   │           │   │   ├── (ID, b)
+│               │   │   │   │   │   │   │   │   │   │           │   │   ├── (SYMBOL, [)
+│               │   │   │   │   │   │   │   │   │   │           │   │   ├── expression
+│               │   │   │   │   │   │   │   │   │   │           │   │   │   └── simple_expression
+│               │   │   │   │   │   │   │   │   │   │           │   │   │       └── additive_expression
+│               │   │   │   │   │   │   │   │   │   │           │   │   │           └── term
+│               │   │   │   │   │   │   │   │   │   │           │   │   │               └── factor
+│               │   │   │   │   │   │   │   │   │   │           │   │   │                   ├── ACTION_number
+│               │   │   │   │   │   │   │   │   │   │           │   │   │                   │   └── epsilon
+│               │   │   │   │   │   │   │   │   │   │           │   │   │                   └── (NUM, 0)
+│               │   │   │   │   │   │   │   │   │   │           │   │   ├── (SYMBOL, ])
+│               │   │   │   │   │   │   │   │   │   │           │   │   └── ACTION_array
+│               │   │   │   │   │   │   │   │   │   │           │   │       └── epsilon
+│               │   │   │   │   │   │   │   │   │   │           │   ├── (SYMBOL, =)
+│               │   │   │   │   │   │   │   │   │   │           │   ├── expression
+│               │   │   │   │   │   │   │   │   │   │           │   │   └── simple_expression
+│               │   │   │   │   │   │   │   │   │   │           │   │       └── additive_expression
+│               │   │   │   │   │   │   │   │   │   │           │   │           └── term
+│               │   │   │   │   │   │   │   │   │   │           │   │               └── factor
+│               │   │   │   │   │   │   │   │   │   │           │   │                   ├── ACTION_number
+│               │   │   │   │   │   │   │   │   │   │           │   │                   │   └── epsilon
+│               │   │   │   │   │   │   │   │   │   │           │   │                   └── (NUM, 4)
+│               │   │   │   │   │   │   │   │   │   │           │   └── ACTION_assign
+│               │   │   │   │   │   │   │   │   │   │           │       └── epsilon
+│               │   │   │   │   │   │   │   │   │   │           ├── (SYMBOL, ;)
+│               │   │   │   │   │   │   │   │   │   │           └── ACTION_clearassign
+│               │   │   │   │   │   │   │   │   │   │               └── epsilon
+│               │   │   │   │   │   │   │   │   │   └── statement
+│               │   │   │   │   │   │   │   │   │       └── expression_stmt
+│               │   │   │   │   │   │   │   │   │           ├── expression
+│               │   │   │   │   │   │   │   │   │           │   ├── var
+│               │   │   │   │   │   │   │   │   │           │   │   ├── ACTION_pid
+│               │   │   │   │   │   │   │   │   │           │   │   │   └── epsilon
+│               │   │   │   │   │   │   │   │   │           │   │   ├── (ID, b)
+│               │   │   │   │   │   │   │   │   │           │   │   ├── (SYMBOL, [)
+│               │   │   │   │   │   │   │   │   │           │   │   ├── expression
+│               │   │   │   │   │   │   │   │   │           │   │   │   └── simple_expression
+│               │   │   │   │   │   │   │   │   │           │   │   │       └── additive_expression
+│               │   │   │   │   │   │   │   │   │           │   │   │           └── term
+│               │   │   │   │   │   │   │   │   │           │   │   │               └── factor
+│               │   │   │   │   │   │   │   │   │           │   │   │                   ├── ACTION_number
+│               │   │   │   │   │   │   │   │   │           │   │   │                   │   └── epsilon
+│               │   │   │   │   │   │   │   │   │           │   │   │                   └── (NUM, 1)
+│               │   │   │   │   │   │   │   │   │           │   │   ├── (SYMBOL, ])
+│               │   │   │   │   │   │   │   │   │           │   │   └── ACTION_array
+│               │   │   │   │   │   │   │   │   │           │   │       └── epsilon
+│               │   │   │   │   │   │   │   │   │           │   ├── (SYMBOL, =)
+│               │   │   │   │   │   │   │   │   │           │   ├── expression
+│               │   │   │   │   │   │   │   │   │           │   │   └── simple_expression
+│               │   │   │   │   │   │   │   │   │           │   │       └── additive_expression
+│               │   │   │   │   │   │   │   │   │           │   │           └── term
+│               │   │   │   │   │   │   │   │   │           │   │               └── factor
+│               │   │   │   │   │   │   │   │   │           │   │                   ├── ACTION_number
+│               │   │   │   │   │   │   │   │   │           │   │                   │   └── epsilon
+│               │   │   │   │   │   │   │   │   │           │   │                   └── (NUM, 5)
+│               │   │   │   │   │   │   │   │   │           │   └── ACTION_assign
+│               │   │   │   │   │   │   │   │   │           │       └── epsilon
+│               │   │   │   │   │   │   │   │   │           ├── (SYMBOL, ;)
+│               │   │   │   │   │   │   │   │   │           └── ACTION_clearassign
+│               │   │   │   │   │   │   │   │   │               └── epsilon
+│               │   │   │   │   │   │   │   │   └── statement
+│               │   │   │   │   │   │   │   │       └── expression_stmt
+│               │   │   │   │   │   │   │   │           ├── expression
+│               │   │   │   │   │   │   │   │           │   ├── var
+│               │   │   │   │   │   │   │   │           │   │   ├── ACTION_pid
+│               │   │   │   │   │   │   │   │           │   │   │   └── epsilon
+│               │   │   │   │   │   │   │   │           │   │   ├── (ID, a)
+│               │   │   │   │   │   │   │   │           │   │   ├── (SYMBOL, [)
+│               │   │   │   │   │   │   │   │           │   │   ├── expression
+│               │   │   │   │   │   │   │   │           │   │   │   └── simple_expression
+│               │   │   │   │   │   │   │   │           │   │   │       └── additive_expression
+│               │   │   │   │   │   │   │   │           │   │   │           └── term
+│               │   │   │   │   │   │   │   │           │   │   │               └── factor
+│               │   │   │   │   │   │   │   │           │   │   │                   ├── ACTION_number
+│               │   │   │   │   │   │   │   │           │   │   │                   │   └── epsilon
+│               │   │   │   │   │   │   │   │           │   │   │                   └── (NUM, 0)
+│               │   │   │   │   │   │   │   │           │   │   ├── (SYMBOL, ])
+│               │   │   │   │   │   │   │   │           │   │   └── ACTION_array
+│               │   │   │   │   │   │   │   │           │   │       └── epsilon
+│               │   │   │   │   │   │   │   │           │   ├── (SYMBOL, =)
+│               │   │   │   │   │   │   │   │           │   ├── expression
+│               │   │   │   │   │   │   │   │           │   │   └── simple_expression
+│               │   │   │   │   │   │   │   │           │   │       └── additive_expression
+│               │   │   │   │   │   │   │   │           │   │           └── term
+│               │   │   │   │   │   │   │   │           │   │               └── factor
+│               │   │   │   │   │   │   │   │           │   │                   ├── ACTION_number
+│               │   │   │   │   │   │   │   │           │   │                   │   └── epsilon
+│               │   │   │   │   │   │   │   │           │   │                   └── (NUM, 2)
+│               │   │   │   │   │   │   │   │           │   └── ACTION_assign
+│               │   │   │   │   │   │   │   │           │       └── epsilon
+│               │   │   │   │   │   │   │   │           ├── (SYMBOL, ;)
+│               │   │   │   │   │   │   │   │           └── ACTION_clearassign
+│               │   │   │   │   │   │   │   │               └── epsilon
+│               │   │   │   │   │   │   │   └── statement
+│               │   │   │   │   │   │   │       └── expression_stmt
+│               │   │   │   │   │   │   │           ├── expression
+│               │   │   │   │   │   │   │           │   ├── var
+│               │   │   │   │   │   │   │           │   │   ├── ACTION_pid
+│               │   │   │   │   │   │   │           │   │   │   └── epsilon
+│               │   │   │   │   │   │   │           │   │   ├── (ID, a)
+│               │   │   │   │   │   │   │           │   │   ├── (SYMBOL, [)
+│               │   │   │   │   │   │   │           │   │   ├── expression
+│               │   │   │   │   │   │   │           │   │   │   └── simple_expression
+│               │   │   │   │   │   │   │           │   │   │       └── additive_expression
+│               │   │   │   │   │   │   │           │   │   │           └── term
+│               │   │   │   │   │   │   │           │   │   │               └── factor
+│               │   │   │   │   │   │   │           │   │   │                   ├── ACTION_number
+│               │   │   │   │   │   │   │           │   │   │                   │   └── epsilon
+│               │   │   │   │   │   │   │           │   │   │                   └── (NUM, 1)
+│               │   │   │   │   │   │   │           │   │   ├── (SYMBOL, ])
+│               │   │   │   │   │   │   │           │   │   └── ACTION_array
+│               │   │   │   │   │   │   │           │   │       └── epsilon
+│               │   │   │   │   │   │   │           │   ├── (SYMBOL, =)
+│               │   │   │   │   │   │   │           │   ├── expression
+│               │   │   │   │   │   │   │           │   │   └── simple_expression
+│               │   │   │   │   │   │   │           │   │       └── additive_expression
+│               │   │   │   │   │   │   │           │   │           └── term
+│               │   │   │   │   │   │   │           │   │               └── factor
+│               │   │   │   │   │   │   │           │   │                   ├── ACTION_number
+│               │   │   │   │   │   │   │           │   │                   │   └── epsilon
+│               │   │   │   │   │   │   │           │   │                   └── (NUM, 3)
+│               │   │   │   │   │   │   │           │   └── ACTION_assign
+│               │   │   │   │   │   │   │           │       └── epsilon
+│               │   │   │   │   │   │   │           ├── (SYMBOL, ;)
+│               │   │   │   │   │   │   │           └── ACTION_clearassign
+│               │   │   │   │   │   │   │               └── epsilon
+│               │   │   │   │   │   │   └── statement
+│               │   │   │   │   │   │       └── expression_stmt
+│               │   │   │   │   │   │           ├── expression
+│               │   │   │   │   │   │           │   ├── var
+│               │   │   │   │   │   │           │   │   ├── ACTION_pid
+│               │   │   │   │   │   │           │   │   │   └── epsilon
+│               │   │   │   │   │   │           │   │   ├── (ID, a)
+│               │   │   │   │   │   │           │   │   ├── (SYMBOL, [)
+│               │   │   │   │   │   │           │   │   ├── expression
+│               │   │   │   │   │   │           │   │   │   └── simple_expression
+│               │   │   │   │   │   │           │   │   │       └── additive_expression
+│               │   │   │   │   │   │           │   │   │           └── term
+│               │   │   │   │   │   │           │   │   │               └── factor
+│               │   │   │   │   │   │           │   │   │                   ├── ACTION_number
+│               │   │   │   │   │   │           │   │   │                   │   └── epsilon
+│               │   │   │   │   │   │           │   │   │                   └── (NUM, 0)
+│               │   │   │   │   │   │           │   │   ├── (SYMBOL, ])
+│               │   │   │   │   │   │           │   │   └── ACTION_array
+│               │   │   │   │   │   │           │   │       └── epsilon
+│               │   │   │   │   │   │           │   ├── (SYMBOL, =)
+│               │   │   │   │   │   │           │   ├── expression
+│               │   │   │   │   │   │           │   │   └── simple_expression
+│               │   │   │   │   │   │           │   │       └── additive_expression
+│               │   │   │   │   │   │           │   │           └── term
+│               │   │   │   │   │   │           │   │               ├── term
+│               │   │   │   │   │   │           │   │               │   └── factor
+│               │   │   │   │   │   │           │   │               │       └── var
+│               │   │   │   │   │   │           │   │               │           ├── ACTION_pid
+│               │   │   │   │   │   │           │   │               │           │   └── epsilon
+│               │   │   │   │   │   │           │   │               │           ├── (ID, a)
+│               │   │   │   │   │   │           │   │               │           ├── (SYMBOL, [)
+│               │   │   │   │   │   │           │   │               │           ├── expression
+│               │   │   │   │   │   │           │   │               │           │   └── simple_expression
+│               │   │   │   │   │   │           │   │               │           │       └── additive_expression
+│               │   │   │   │   │   │           │   │               │           │           └── term
+│               │   │   │   │   │   │           │   │               │           │               └── factor
+│               │   │   │   │   │   │           │   │               │           │                   ├── ACTION_number
+│               │   │   │   │   │   │           │   │               │           │                   │   └── epsilon
+│               │   │   │   │   │   │           │   │               │           │                   └── (NUM, 0)
+│               │   │   │   │   │   │           │   │               │           ├── (SYMBOL, ])
+│               │   │   │   │   │   │           │   │               │           └── ACTION_array
+│               │   │   │   │   │   │           │   │               │               └── epsilon
+│               │   │   │   │   │   │           │   │               ├── ACTION_sign
+│               │   │   │   │   │   │           │   │               │   └── epsilon
+│               │   │   │   │   │   │           │   │               ├── mulop
+│               │   │   │   │   │   │           │   │               │   └── (SYMBOL, *)
+│               │   │   │   │   │   │           │   │               ├── factor
+│               │   │   │   │   │   │           │   │               │   └── var
+│               │   │   │   │   │   │           │   │               │       ├── ACTION_pid
+│               │   │   │   │   │   │           │   │               │       │   └── epsilon
+│               │   │   │   │   │   │           │   │               │       ├── (ID, b)
+│               │   │   │   │   │   │           │   │               │       ├── (SYMBOL, [)
+│               │   │   │   │   │   │           │   │               │       ├── expression
+│               │   │   │   │   │   │           │   │               │       │   └── simple_expression
+│               │   │   │   │   │   │           │   │               │       │       └── additive_expression
+│               │   │   │   │   │   │           │   │               │       │           └── term
+│               │   │   │   │   │   │           │   │               │       │               └── factor
+│               │   │   │   │   │   │           │   │               │       │                   ├── ACTION_number
+│               │   │   │   │   │   │           │   │               │       │                   │   └── epsilon
+│               │   │   │   │   │   │           │   │               │       │                   └── (NUM, 0)
+│               │   │   │   │   │   │           │   │               │       ├── (SYMBOL, ])
+│               │   │   │   │   │   │           │   │               │       └── ACTION_array
+│               │   │   │   │   │   │           │   │               │           └── epsilon
+│               │   │   │   │   │   │           │   │               └── ACTION_op
+│               │   │   │   │   │   │           │   │                   └── epsilon
+│               │   │   │   │   │   │           │   └── ACTION_assign
+│               │   │   │   │   │   │           │       └── epsilon
+│               │   │   │   │   │   │           ├── (SYMBOL, ;)
+│               │   │   │   │   │   │           └── ACTION_clearassign
+│               │   │   │   │   │   │               └── epsilon
+│               │   │   │   │   │   └── statement
+│               │   │   │   │   │       └── expression_stmt
+│               │   │   │   │   │           ├── expression
+│               │   │   │   │   │           │   ├── var
+│               │   │   │   │   │           │   │   ├── ACTION_pid
+│               │   │   │   │   │           │   │   │   └── epsilon
+│               │   │   │   │   │           │   │   ├── (ID, a)
+│               │   │   │   │   │           │   │   ├── (SYMBOL, [)
+│               │   │   │   │   │           │   │   ├── expression
+│               │   │   │   │   │           │   │   │   └── simple_expression
+│               │   │   │   │   │           │   │   │       └── additive_expression
+│               │   │   │   │   │           │   │   │           └── term
+│               │   │   │   │   │           │   │   │               └── factor
+│               │   │   │   │   │           │   │   │                   ├── ACTION_number
+│               │   │   │   │   │           │   │   │                   │   └── epsilon
+│               │   │   │   │   │           │   │   │                   └── (NUM, 1)
+│               │   │   │   │   │           │   │   ├── (SYMBOL, ])
+│               │   │   │   │   │           │   │   └── ACTION_array
+│               │   │   │   │   │           │   │       └── epsilon
+│               │   │   │   │   │           │   ├── (SYMBOL, =)
+│               │   │   │   │   │           │   ├── expression
+│               │   │   │   │   │           │   │   └── simple_expression
+│               │   │   │   │   │           │   │       └── additive_expression
+│               │   │   │   │   │           │   │           ├── additive_expression
+│               │   │   │   │   │           │   │           │   └── term
+│               │   │   │   │   │           │   │           │       └── factor
+│               │   │   │   │   │           │   │           │           └── var
+│               │   │   │   │   │           │   │           │               ├── ACTION_pid
+│               │   │   │   │   │           │   │           │               │   └── epsilon
+│               │   │   │   │   │           │   │           │               ├── (ID, a)
+│               │   │   │   │   │           │   │           │               ├── (SYMBOL, [)
+│               │   │   │   │   │           │   │           │               ├── expression
+│               │   │   │   │   │           │   │           │               │   └── simple_expression
+│               │   │   │   │   │           │   │           │               │       └── additive_expression
+│               │   │   │   │   │           │   │           │               │           └── term
+│               │   │   │   │   │           │   │           │               │               └── factor
+│               │   │   │   │   │           │   │           │               │                   ├── ACTION_number
+│               │   │   │   │   │           │   │           │               │                   │   └── epsilon
+│               │   │   │   │   │           │   │           │               │                   └── (NUM, 1)
+│               │   │   │   │   │           │   │           │               ├── (SYMBOL, ])
+│               │   │   │   │   │           │   │           │               └── ACTION_array
+│               │   │   │   │   │           │   │           │                   └── epsilon
+│               │   │   │   │   │           │   │           ├── ACTION_sign
+│               │   │   │   │   │           │   │           │   └── epsilon
+│               │   │   │   │   │           │   │           ├── addop
+│               │   │   │   │   │           │   │           │   └── (SYMBOL, +)
+│               │   │   │   │   │           │   │           ├── term
+│               │   │   │   │   │           │   │           │   └── factor
+│               │   │   │   │   │           │   │           │       └── var
+│               │   │   │   │   │           │   │           │           ├── ACTION_pid
+│               │   │   │   │   │           │   │           │           │   └── epsilon
+│               │   │   │   │   │           │   │           │           ├── (ID, b)
+│               │   │   │   │   │           │   │           │           ├── (SYMBOL, [)
+│               │   │   │   │   │           │   │           │           ├── expression
+│               │   │   │   │   │           │   │           │           │   └── simple_expression
+│               │   │   │   │   │           │   │           │           │       └── additive_expression
+│               │   │   │   │   │           │   │           │           │           └── term
+│               │   │   │   │   │           │   │           │           │               └── factor
+│               │   │   │   │   │           │   │           │           │                   ├── ACTION_number
+│               │   │   │   │   │           │   │           │           │                   │   └── epsilon
+│               │   │   │   │   │           │   │           │           │                   └── (NUM, 1)
+│               │   │   │   │   │           │   │           │           ├── (SYMBOL, ])
+│               │   │   │   │   │           │   │           │           └── ACTION_array
+│               │   │   │   │   │           │   │           │               └── epsilon
+│               │   │   │   │   │           │   │           └── ACTION_op
+│               │   │   │   │   │           │   │               └── epsilon
+│               │   │   │   │   │           │   └── ACTION_assign
+│               │   │   │   │   │           │       └── epsilon
+│               │   │   │   │   │           ├── (SYMBOL, ;)
+│               │   │   │   │   │           └── ACTION_clearassign
+│               │   │   │   │   │               └── epsilon
+│               │   │   │   │   └── statement
+│               │   │   │   │       └── expression_stmt
+│               │   │   │   │           ├── expression
+│               │   │   │   │           │   ├── var
+│               │   │   │   │           │   │   ├── ACTION_pid
+│               │   │   │   │           │   │   │   └── epsilon
+│               │   │   │   │           │   │   └── (ID, i)
+│               │   │   │   │           │   ├── (SYMBOL, =)
+│               │   │   │   │           │   ├── expression
+│               │   │   │   │           │   │   └── simple_expression
+│               │   │   │   │           │   │       └── additive_expression
+│               │   │   │   │           │   │           └── term
+│               │   │   │   │           │   │               └── factor
+│               │   │   │   │           │   │                   ├── ACTION_number
+│               │   │   │   │           │   │                   │   └── epsilon
+│               │   │   │   │           │   │                   └── (NUM, 0)
+│               │   │   │   │           │   └── ACTION_assign
+│               │   │   │   │           │       └── epsilon
+│               │   │   │   │           ├── (SYMBOL, ;)
+│               │   │   │   │           └── ACTION_clearassign
+│               │   │   │   │               └── epsilon
 │               │   │   │   └── statement
-│               │   │   │       └── expression_stmt
+│               │   │   │       └── iteration_stmt
+│               │   │   │           ├── (KEYWORD, while)
+│               │   │   │           ├── ACTION_label
+│               │   │   │           │   └── epsilon
+│               │   │   │           ├── (SYMBOL, ()
 │               │   │   │           ├── expression
-│               │   │   │           │   ├── var
-│               │   │   │           │   │   ├── ACTION_pid
-│               │   │   │           │   │   │   └── epsilon
-│               │   │   │           │   │   └── (ID, arrsize)
-│               │   │   │           │   ├── (SYMBOL, =)
-│               │   │   │           │   ├── expression
-│               │   │   │           │   │   └── simple_expression
-│               │   │   │           │   │       └── additive_expression
-│               │   │   │           │   │           └── term
-│               │   │   │           │   │               └── factor
-│               │   │   │           │   │                   ├── ACTION_number
-│               │   │   │           │   │                   │   └── epsilon
-│               │   │   │           │   │                   └── (NUM, 20)
-│               │   │   │           │   └── ACTION_assign
-│               │   │   │           │       └── epsilon
-│               │   │   │           ├── (SYMBOL, ;)
-│               │   │   │           └── ACTION_clearassign
+│               │   │   │           │   └── simple_expression
+│               │   │   │           │       ├── additive_expression
+│               │   │   │           │       │   └── term
+│               │   │   │           │       │       └── factor
+│               │   │   │           │       │           └── var
+│               │   │   │           │       │               ├── ACTION_pid
+│               │   │   │           │       │               │   └── epsilon
+│               │   │   │           │       │               └── (ID, i)
+│               │   │   │           │       ├── ACTION_sign
+│               │   │   │           │       │   └── epsilon
+│               │   │   │           │       ├── relop
+│               │   │   │           │       │   └── (SYMBOL, <)
+│               │   │   │           │       ├── additive_expression
+│               │   │   │           │       │   └── term
+│               │   │   │           │       │       └── factor
+│               │   │   │           │       │           ├── ACTION_number
+│               │   │   │           │       │           │   └── epsilon
+│               │   │   │           │       │           └── (NUM, 2)
+│               │   │   │           │       └── ACTION_op
+│               │   │   │           │           └── epsilon
+│               │   │   │           ├── (SYMBOL, ))
+│               │   │   │           ├── ACTION_save
+│               │   │   │           │   └── epsilon
+│               │   │   │           ├── statement
+│               │   │   │           │   └── compound_stmt
+│               │   │   │           │       ├── (SYMBOL, {)
+│               │   │   │           │       ├── local_declarations
+│               │   │   │           │       │   └── epsilon
+│               │   │   │           │       ├── statement_list
+│               │   │   │           │       │   ├── statement_list
+│               │   │   │           │       │   │   ├── statement_list
+│               │   │   │           │       │   │   │   └── epsilon
+│               │   │   │           │       │   │   └── statement
+│               │   │   │           │       │   │       └── output_stmt
+│               │   │   │           │       │   │           ├── (KEYWORD, output)
+│               │   │   │           │       │   │           ├── (SYMBOL, ()
+│               │   │   │           │       │   │           ├── expression
+│               │   │   │           │       │   │           │   └── simple_expression
+│               │   │   │           │       │   │           │       └── additive_expression
+│               │   │   │           │       │   │           │           └── term
+│               │   │   │           │       │   │           │               └── factor
+│               │   │   │           │       │   │           │                   └── var
+│               │   │   │           │       │   │           │                       ├── ACTION_pid
+│               │   │   │           │       │   │           │                       │   └── epsilon
+│               │   │   │           │       │   │           │                       ├── (ID, a)
+│               │   │   │           │       │   │           │                       ├── (SYMBOL, [)
+│               │   │   │           │       │   │           │                       ├── expression
+│               │   │   │           │       │   │           │                       │   └── simple_expression
+│               │   │   │           │       │   │           │                       │       └── additive_expression
+│               │   │   │           │       │   │           │                       │           └── term
+│               │   │   │           │       │   │           │                       │               └── factor
+│               │   │   │           │       │   │           │                       │                   └── var
+│               │   │   │           │       │   │           │                       │                       ├── ACTION_pid
+│               │   │   │           │       │   │           │                       │                       │   └── epsilon
+│               │   │   │           │       │   │           │                       │                       └── (ID, i)
+│               │   │   │           │       │   │           │                       ├── (SYMBOL, ])
+│               │   │   │           │       │   │           │                       └── ACTION_array
+│               │   │   │           │       │   │           │                           └── epsilon
+│               │   │   │           │       │   │           ├── (SYMBOL, ))
+│               │   │   │           │       │   │           ├── ACTION_print
+│               │   │   │           │       │   │           │   └── epsilon
+│               │   │   │           │       │   │           └── (SYMBOL, ;)
+│               │   │   │           │       │   └── statement
+│               │   │   │           │       │       └── expression_stmt
+│               │   │   │           │       │           ├── expression
+│               │   │   │           │       │           │   ├── var
+│               │   │   │           │       │           │   │   ├── ACTION_pid
+│               │   │   │           │       │           │   │   │   └── epsilon
+│               │   │   │           │       │           │   │   └── (ID, i)
+│               │   │   │           │       │           │   ├── (SYMBOL, =)
+│               │   │   │           │       │           │   ├── expression
+│               │   │   │           │       │           │   │   └── simple_expression
+│               │   │   │           │       │           │   │       └── additive_expression
+│               │   │   │           │       │           │   │           ├── additive_expression
+│               │   │   │           │       │           │   │           │   └── term
+│               │   │   │           │       │           │   │           │       └── factor
+│               │   │   │           │       │           │   │           │           └── var
+│               │   │   │           │       │           │   │           │               ├── ACTION_pid
+│               │   │   │           │       │           │   │           │               │   └── epsilon
+│               │   │   │           │       │           │   │           │               └── (ID, i)
+│               │   │   │           │       │           │   │           ├── ACTION_sign
+│               │   │   │           │       │           │   │           │   └── epsilon
+│               │   │   │           │       │           │   │           ├── addop
+│               │   │   │           │       │           │   │           │   └── (SYMBOL, +)
+│               │   │   │           │       │           │   │           ├── term
+│               │   │   │           │       │           │   │           │   └── factor
+│               │   │   │           │       │           │   │           │       ├── ACTION_number
+│               │   │   │           │       │           │   │           │       │   └── epsilon
+│               │   │   │           │       │           │   │           │       └── (NUM, 1)
+│               │   │   │           │       │           │   │           └── ACTION_op
+│               │   │   │           │       │           │   │               └── epsilon
+│               │   │   │           │       │           │   └── ACTION_assign
+│               │   │   │           │       │           │       └── epsilon
+│               │   │   │           │       │           ├── (SYMBOL, ;)
+│               │   │   │           │       │           └── ACTION_clearassign
+│               │   │   │           │       │               └── epsilon
+│               │   │   │           │       └── (SYMBOL, })
+│               │   │   │           ├── ACTION_loopwhile
+│               │   │   │           │   └── epsilon
+│               │   │   │           └── ACTION_callbreak
 │               │   │   │               └── epsilon
 │               │   │   └── statement
 │               │   │       └── expression_stmt
@@ -94,7 +481,7 @@ program
 │               │   │           │   ├── var
 │               │   │           │   │   ├── ACTION_pid
 │               │   │           │   │   │   └── epsilon
-│               │   │           │   │   └── (ID, i)
+│               │   │           │   │   └── (ID, k)
 │               │   │           │   ├── (SYMBOL, =)
 │               │   │           │   ├── expression
 │               │   │           │   │   └── simple_expression
@@ -103,7 +490,7 @@ program
 │               │   │           │   │               └── factor
 │               │   │           │   │                   ├── ACTION_number
 │               │   │           │   │                   │   └── epsilon
-│               │   │           │   │                   └── (NUM, 0)
+│               │   │           │   │                   └── (NUM, 10)
 │               │   │           │   └── ACTION_assign
 │               │   │           │       └── epsilon
 │               │   │           ├── (SYMBOL, ;)
@@ -118,24 +505,11 @@ program
 │               │           ├── expression
 │               │           │   └── simple_expression
 │               │           │       ├── additive_expression
-│               │           │       │   ├── additive_expression
-│               │           │       │   │   └── term
-│               │           │       │   │       └── factor
-│               │           │       │   │           └── var
-│               │           │       │   │               ├── ACTION_pid
-│               │           │       │   │               │   └── epsilon
-│               │           │       │   │               └── (ID, i)
-│               │           │       │   ├── ACTION_sign
-│               │           │       │   │   └── epsilon
-│               │           │       │   ├── addop
-│               │           │       │   │   └── (SYMBOL, +)
-│               │           │       │   ├── term
-│               │           │       │   │   └── factor
-│               │           │       │   │       ├── ACTION_number
-│               │           │       │   │       │   └── epsilon
-│               │           │       │   │       └── (NUM, 1)
-│               │           │       │   └── ACTION_op
-│               │           │       │       └── epsilon
+│               │           │       │   └── term
+│               │           │       │       └── factor
+│               │           │       │           ├── ACTION_number
+│               │           │       │           │   └── epsilon
+│               │           │       │           └── (NUM, 0)
 │               │           │       ├── ACTION_sign
 │               │           │       │   └── epsilon
 │               │           │       ├── relop
@@ -146,7 +520,7 @@ program
 │               │           │       │           └── var
 │               │           │       │               ├── ACTION_pid
 │               │           │       │               │   └── epsilon
-│               │           │       │               └── (ID, arrsize)
+│               │           │       │               └── (ID, k)
 │               │           │       └── ACTION_op
 │               │           │           └── epsilon
 │               │           ├── (SYMBOL, ))
@@ -161,64 +535,7 @@ program
 │               │           │       │   ├── statement_list
 │               │           │       │   │   ├── statement_list
 │               │           │       │   │   │   ├── statement_list
-│               │           │       │   │   │   │   ├── statement_list
-│               │           │       │   │   │   │   │   ├── statement_list
-│               │           │       │   │   │   │   │   │   └── epsilon
-│               │           │       │   │   │   │   │   └── statement
-│               │           │       │   │   │   │   │       └── expression_stmt
-│               │           │       │   │   │   │   │           ├── expression
-│               │           │       │   │   │   │   │           │   ├── var
-│               │           │       │   │   │   │   │           │   │   ├── ACTION_pid
-│               │           │       │   │   │   │   │           │   │   │   └── epsilon
-│               │           │       │   │   │   │   │           │   │   └── (ID, j)
-│               │           │       │   │   │   │   │           │   ├── (SYMBOL, =)
-│               │           │       │   │   │   │   │           │   ├── expression
-│               │           │       │   │   │   │   │           │   │   └── simple_expression
-│               │           │       │   │   │   │   │           │   │       └── additive_expression
-│               │           │       │   │   │   │   │           │   │           └── term
-│               │           │       │   │   │   │   │           │   │               └── factor
-│               │           │       │   │   │   │   │           │   │                   ├── ACTION_number
-│               │           │       │   │   │   │   │           │   │                   │   └── epsilon
-│               │           │       │   │   │   │   │           │   │                   └── (NUM, 0)
-│               │           │       │   │   │   │   │           │   └── ACTION_assign
-│               │           │       │   │   │   │   │           │       └── epsilon
-│               │           │       │   │   │   │   │           ├── (SYMBOL, ;)
-│               │           │       │   │   │   │   │           └── ACTION_clearassign
-│               │           │       │   │   │   │   │               └── epsilon
-│               │           │       │   │   │   │   └── statement
-│               │           │       │   │   │   │       └── expression_stmt
-│               │           │       │   │   │   │           ├── expression
-│               │           │       │   │   │   │           │   ├── var
-│               │           │       │   │   │   │           │   │   ├── ACTION_pid
-│               │           │       │   │   │   │           │   │   │   └── epsilon
-│               │           │       │   │   │   │           │   │   ├── (ID, arr)
-│               │           │       │   │   │   │           │   │   ├── (SYMBOL, [)
-│               │           │       │   │   │   │           │   │   ├── expression
-│               │           │       │   │   │   │           │   │   │   └── simple_expression
-│               │           │       │   │   │   │           │   │   │       └── additive_expression
-│               │           │       │   │   │   │           │   │   │           └── term
-│               │           │       │   │   │   │           │   │   │               └── factor
-│               │           │       │   │   │   │           │   │   │                   └── var
-│               │           │       │   │   │   │           │   │   │                       ├── ACTION_pid
-│               │           │       │   │   │   │           │   │   │                       │   └── epsilon
-│               │           │       │   │   │   │           │   │   │                       └── (ID, i)
-│               │           │       │   │   │   │           │   │   ├── (SYMBOL, ])
-│               │           │       │   │   │   │           │   │   └── ACTION_array
-│               │           │       │   │   │   │           │   │       └── epsilon
-│               │           │       │   │   │   │           │   ├── (SYMBOL, =)
-│               │           │       │   │   │   │           │   ├── expression
-│               │           │       │   │   │   │           │   │   └── simple_expression
-│               │           │       │   │   │   │           │   │       └── additive_expression
-│               │           │       │   │   │   │           │   │           └── term
-│               │           │       │   │   │   │           │   │               └── factor
-│               │           │       │   │   │   │           │   │                   ├── ACTION_number
-│               │           │       │   │   │   │           │   │                   │   └── epsilon
-│               │           │       │   │   │   │           │   │                   └── (NUM, 2)
-│               │           │       │   │   │   │           │   └── ACTION_assign
-│               │           │       │   │   │   │           │       └── epsilon
-│               │           │       │   │   │   │           ├── (SYMBOL, ;)
-│               │           │       │   │   │   │           └── ACTION_clearassign
-│               │           │       │   │   │   │               └── epsilon
+│               │           │       │   │   │   │   └── epsilon
 │               │           │       │   │   │   └── statement
 │               │           │       │   │   │       └── output_stmt
 │               │           │       │   │   │           ├── (KEYWORD, output)
@@ -226,206 +543,107 @@ program
 │               │           │       │   │   │           ├── expression
 │               │           │       │   │   │           │   └── simple_expression
 │               │           │       │   │   │           │       └── additive_expression
-│               │           │       │   │   │           │           └── term
-│               │           │       │   │   │           │               └── factor
-│               │           │       │   │   │           │                   └── var
-│               │           │       │   │   │           │                       ├── ACTION_pid
-│               │           │       │   │   │           │                       │   └── epsilon
-│               │           │       │   │   │           │                       └── (ID, i)
+│               │           │       │   │   │           │           ├── additive_expression
+│               │           │       │   │   │           │           │   └── term
+│               │           │       │   │   │           │           │       └── factor
+│               │           │       │   │   │           │           │           └── var
+│               │           │       │   │   │           │           │               ├── ACTION_pid
+│               │           │       │   │   │           │           │               │   └── epsilon
+│               │           │       │   │   │           │           │               └── (ID, k)
+│               │           │       │   │   │           │           ├── ACTION_sign
+│               │           │       │   │   │           │           │   └── epsilon
+│               │           │       │   │   │           │           ├── addop
+│               │           │       │   │   │           │           │   └── (SYMBOL, +)
+│               │           │       │   │   │           │           ├── term
+│               │           │       │   │   │           │           │   └── factor
+│               │           │       │   │   │           │           │       ├── ACTION_number
+│               │           │       │   │   │           │           │       │   └── epsilon
+│               │           │       │   │   │           │           │       └── (NUM, 1)
+│               │           │       │   │   │           │           └── ACTION_op
+│               │           │       │   │   │           │               └── epsilon
 │               │           │       │   │   │           ├── (SYMBOL, ))
 │               │           │       │   │   │           ├── ACTION_print
 │               │           │       │   │   │           │   └── epsilon
 │               │           │       │   │   │           └── (SYMBOL, ;)
 │               │           │       │   │   └── statement
-│               │           │       │   │       └── iteration_stmt
-│               │           │       │   │           ├── (KEYWORD, while)
-│               │           │       │   │           ├── ACTION_label
-│               │           │       │   │           │   └── epsilon
-│               │           │       │   │           ├── (SYMBOL, ()
+│               │           │       │   │       └── expression_stmt
 │               │           │       │   │           ├── expression
-│               │           │       │   │           │   └── simple_expression
-│               │           │       │   │           │       ├── additive_expression
-│               │           │       │   │           │       │   └── term
-│               │           │       │   │           │       │       └── factor
-│               │           │       │   │           │       │           └── var
-│               │           │       │   │           │       │               ├── ACTION_pid
-│               │           │       │   │           │       │               │   └── epsilon
-│               │           │       │   │           │       │               └── (ID, j)
-│               │           │       │   │           │       ├── ACTION_sign
-│               │           │       │   │           │       │   └── epsilon
-│               │           │       │   │           │       ├── relop
-│               │           │       │   │           │       │   └── (SYMBOL, <)
-│               │           │       │   │           │       ├── additive_expression
-│               │           │       │   │           │       │   └── term
-│               │           │       │   │           │       │       └── factor
-│               │           │       │   │           │       │           └── var
-│               │           │       │   │           │       │               ├── ACTION_pid
-│               │           │       │   │           │       │               │   └── epsilon
-│               │           │       │   │           │       │               └── (ID, i)
-│               │           │       │   │           │       └── ACTION_op
-│               │           │       │   │           │           └── epsilon
-│               │           │       │   │           ├── (SYMBOL, ))
-│               │           │       │   │           ├── ACTION_save
-│               │           │       │   │           │   └── epsilon
-│               │           │       │   │           ├── statement
-│               │           │       │   │           │   └── compound_stmt
-│               │           │       │   │           │       ├── (SYMBOL, {)
-│               │           │       │   │           │       ├── local_declarations
-│               │           │       │   │           │       │   └── epsilon
-│               │           │       │   │           │       ├── statement_list
-│               │           │       │   │           │       │   ├── statement_list
-│               │           │       │   │           │       │   │   ├── statement_list
-│               │           │       │   │           │       │   │   │   └── epsilon
-│               │           │       │   │           │       │   │   └── statement
-│               │           │       │   │           │       │   │       └── expression_stmt
-│               │           │       │   │           │       │   │           ├── expression
-│               │           │       │   │           │       │   │           │   ├── var
-│               │           │       │   │           │       │   │           │   │   ├── ACTION_pid
-│               │           │       │   │           │       │   │           │   │   │   └── epsilon
-│               │           │       │   │           │       │   │           │   │   ├── (ID, arr)
-│               │           │       │   │           │       │   │           │   │   ├── (SYMBOL, [)
-│               │           │       │   │           │       │   │           │   │   ├── expression
-│               │           │       │   │           │       │   │           │   │   │   └── simple_expression
-│               │           │       │   │           │       │   │           │   │   │       └── additive_expression
-│               │           │       │   │           │       │   │           │   │   │           └── term
-│               │           │       │   │           │       │   │           │   │   │               └── factor
-│               │           │       │   │           │       │   │           │   │   │                   └── var
-│               │           │       │   │           │       │   │           │   │   │                       ├── ACTION_pid
-│               │           │       │   │           │       │   │           │   │   │                       │   └── epsilon
-│               │           │       │   │           │       │   │           │   │   │                       └── (ID, i)
-│               │           │       │   │           │       │   │           │   │   ├── (SYMBOL, ])
-│               │           │       │   │           │       │   │           │   │   └── ACTION_array
-│               │           │       │   │           │       │   │           │   │       └── epsilon
-│               │           │       │   │           │       │   │           │   ├── (SYMBOL, =)
-│               │           │       │   │           │       │   │           │   ├── expression
-│               │           │       │   │           │       │   │           │   │   └── simple_expression
-│               │           │       │   │           │       │   │           │   │       └── additive_expression
-│               │           │       │   │           │       │   │           │   │           └── term
-│               │           │       │   │           │       │   │           │   │               ├── term
-│               │           │       │   │           │       │   │           │   │               │   └── factor
-│               │           │       │   │           │       │   │           │   │               │       └── var
-│               │           │       │   │           │       │   │           │   │               │           ├── ACTION_pid
-│               │           │       │   │           │       │   │           │   │               │           │   └── epsilon
-│               │           │       │   │           │       │   │           │   │               │           ├── (ID, arr)
-│               │           │       │   │           │       │   │           │   │               │           ├── (SYMBOL, [)
-│               │           │       │   │           │       │   │           │   │               │           ├── expression
-│               │           │       │   │           │       │   │           │   │               │           │   └── simple_expression
-│               │           │       │   │           │       │   │           │   │               │           │       └── additive_expression
-│               │           │       │   │           │       │   │           │   │               │           │           └── term
-│               │           │       │   │           │       │   │           │   │               │           │               └── factor
-│               │           │       │   │           │       │   │           │   │               │           │                   └── var
-│               │           │       │   │           │       │   │           │   │               │           │                       ├── ACTION_pid
-│               │           │       │   │           │       │   │           │   │               │           │                       │   └── epsilon
-│               │           │       │   │           │       │   │           │   │               │           │                       └── (ID, i)
-│               │           │       │   │           │       │   │           │   │               │           ├── (SYMBOL, ])
-│               │           │       │   │           │       │   │           │   │               │           └── ACTION_array
-│               │           │       │   │           │       │   │           │   │               │               └── epsilon
-│               │           │       │   │           │       │   │           │   │               ├── ACTION_sign
-│               │           │       │   │           │       │   │           │   │               │   └── epsilon
-│               │           │       │   │           │       │   │           │   │               ├── mulop
-│               │           │       │   │           │       │   │           │   │               │   └── (SYMBOL, *)
-│               │           │       │   │           │       │   │           │   │               ├── factor
-│               │           │       │   │           │       │   │           │   │               │   ├── (SYMBOL, ()
-│               │           │       │   │           │       │   │           │   │               │   ├── expression
-│               │           │       │   │           │       │   │           │   │               │   │   └── simple_expression
-│               │           │       │   │           │       │   │           │   │               │   │       └── additive_expression
-│               │           │       │   │           │       │   │           │   │               │   │           ├── additive_expression
-│               │           │       │   │           │       │   │           │   │               │   │           │   └── term
-│               │           │       │   │           │       │   │           │   │               │   │           │       └── factor
-│               │           │       │   │           │       │   │           │   │               │   │           │           ├── ACTION_number
-│               │           │       │   │           │       │   │           │   │               │   │           │           │   └── epsilon
-│               │           │       │   │           │       │   │           │   │               │   │           │           └── (NUM, 0)
-│               │           │       │   │           │       │   │           │   │               │   │           ├── ACTION_sign
-│               │           │       │   │           │       │   │           │   │               │   │           │   └── epsilon
-│               │           │       │   │           │       │   │           │   │               │   │           ├── addop
-│               │           │       │   │           │       │   │           │   │               │   │           │   └── (SYMBOL, -)
-│               │           │       │   │           │       │   │           │   │               │   │           ├── term
-│               │           │       │   │           │       │   │           │   │               │   │           │   └── factor
-│               │           │       │   │           │       │   │           │   │               │   │           │       ├── ACTION_number
-│               │           │       │   │           │       │   │           │   │               │   │           │       │   └── epsilon
-│               │           │       │   │           │       │   │           │   │               │   │           │       └── (NUM, 2)
-│               │           │       │   │           │       │   │           │   │               │   │           └── ACTION_op
-│               │           │       │   │           │       │   │           │   │               │   │               └── epsilon
-│               │           │       │   │           │       │   │           │   │               │   └── (SYMBOL, ))
-│               │           │       │   │           │       │   │           │   │               └── ACTION_op
-│               │           │       │   │           │       │   │           │   │                   └── epsilon
-│               │           │       │   │           │       │   │           │   └── ACTION_assign
-│               │           │       │   │           │       │   │           │       └── epsilon
-│               │           │       │   │           │       │   │           ├── (SYMBOL, ;)
-│               │           │       │   │           │       │   │           └── ACTION_clearassign
-│               │           │       │   │           │       │   │               └── epsilon
-│               │           │       │   │           │       │   └── statement
-│               │           │       │   │           │       │       └── expression_stmt
-│               │           │       │   │           │       │           ├── expression
-│               │           │       │   │           │       │           │   ├── var
-│               │           │       │   │           │       │           │   │   ├── ACTION_pid
-│               │           │       │   │           │       │           │   │   │   └── epsilon
-│               │           │       │   │           │       │           │   │   └── (ID, j)
-│               │           │       │   │           │       │           │   ├── (SYMBOL, =)
-│               │           │       │   │           │       │           │   ├── expression
-│               │           │       │   │           │       │           │   │   └── simple_expression
-│               │           │       │   │           │       │           │   │       └── additive_expression
-│               │           │       │   │           │       │           │   │           ├── additive_expression
-│               │           │       │   │           │       │           │   │           │   └── term
-│               │           │       │   │           │       │           │   │           │       └── factor
-│               │           │       │   │           │       │           │   │           │           └── var
-│               │           │       │   │           │       │           │   │           │               ├── ACTION_pid
-│               │           │       │   │           │       │           │   │           │               │   └── epsilon
-│               │           │       │   │           │       │           │   │           │               └── (ID, j)
-│               │           │       │   │           │       │           │   │           ├── ACTION_sign
-│               │           │       │   │           │       │           │   │           │   └── epsilon
-│               │           │       │   │           │       │           │   │           ├── addop
-│               │           │       │   │           │       │           │   │           │   └── (SYMBOL, +)
-│               │           │       │   │           │       │           │   │           ├── term
-│               │           │       │   │           │       │           │   │           │   └── factor
-│               │           │       │   │           │       │           │   │           │       ├── ACTION_number
-│               │           │       │   │           │       │           │   │           │       │   └── epsilon
-│               │           │       │   │           │       │           │   │           │       └── (NUM, 1)
-│               │           │       │   │           │       │           │   │           └── ACTION_op
-│               │           │       │   │           │       │           │   │               └── epsilon
-│               │           │       │   │           │       │           │   └── ACTION_assign
-│               │           │       │   │           │       │           │       └── epsilon
-│               │           │       │   │           │       │           ├── (SYMBOL, ;)
-│               │           │       │   │           │       │           └── ACTION_clearassign
-│               │           │       │   │           │       │               └── epsilon
-│               │           │       │   │           │       └── (SYMBOL, })
-│               │           │       │   │           ├── ACTION_loopwhile
-│               │           │       │   │           │   └── epsilon
-│               │           │       │   │           └── ACTION_callbreak
+│               │           │       │   │           │   ├── var
+│               │           │       │   │           │   │   ├── ACTION_pid
+│               │           │       │   │           │   │   │   └── epsilon
+│               │           │       │   │           │   │   └── (ID, k)
+│               │           │       │   │           │   ├── (SYMBOL, =)
+│               │           │       │   │           │   ├── expression
+│               │           │       │   │           │   │   └── simple_expression
+│               │           │       │   │           │   │       └── additive_expression
+│               │           │       │   │           │   │           ├── additive_expression
+│               │           │       │   │           │   │           │   └── term
+│               │           │       │   │           │   │           │       └── factor
+│               │           │       │   │           │   │           │           └── var
+│               │           │       │   │           │   │           │               ├── ACTION_pid
+│               │           │       │   │           │   │           │               │   └── epsilon
+│               │           │       │   │           │   │           │               └── (ID, k)
+│               │           │       │   │           │   │           ├── ACTION_sign
+│               │           │       │   │           │   │           │   └── epsilon
+│               │           │       │   │           │   │           ├── addop
+│               │           │       │   │           │   │           │   └── (SYMBOL, -)
+│               │           │       │   │           │   │           ├── term
+│               │           │       │   │           │   │           │   └── factor
+│               │           │       │   │           │   │           │       ├── ACTION_number
+│               │           │       │   │           │   │           │       │   └── epsilon
+│               │           │       │   │           │   │           │       └── (NUM, 1)
+│               │           │       │   │           │   │           └── ACTION_op
+│               │           │       │   │           │   │               └── epsilon
+│               │           │       │   │           │   └── ACTION_assign
+│               │           │       │   │           │       └── epsilon
+│               │           │       │   │           ├── (SYMBOL, ;)
+│               │           │       │   │           └── ACTION_clearassign
 │               │           │       │   │               └── epsilon
 │               │           │       │   └── statement
-│               │           │       │       └── expression_stmt
+│               │           │       │       └── selection_stmt
+│               │           │       │           ├── (KEYWORD, if)
+│               │           │       │           ├── (SYMBOL, ()
 │               │           │       │           ├── expression
-│               │           │       │           │   ├── var
-│               │           │       │           │   │   ├── ACTION_pid
-│               │           │       │           │   │   │   └── epsilon
-│               │           │       │           │   │   └── (ID, i)
-│               │           │       │           │   ├── (SYMBOL, =)
-│               │           │       │           │   ├── expression
-│               │           │       │           │   │   └── simple_expression
-│               │           │       │           │   │       └── additive_expression
-│               │           │       │           │   │           ├── additive_expression
-│               │           │       │           │   │           │   └── term
-│               │           │       │           │   │           │       └── factor
-│               │           │       │           │   │           │           └── var
-│               │           │       │           │   │           │               ├── ACTION_pid
-│               │           │       │           │   │           │               │   └── epsilon
-│               │           │       │           │   │           │               └── (ID, i)
-│               │           │       │           │   │           ├── ACTION_sign
-│               │           │       │           │   │           │   └── epsilon
-│               │           │       │           │   │           ├── addop
-│               │           │       │           │   │           │   └── (SYMBOL, +)
-│               │           │       │           │   │           ├── term
-│               │           │       │           │   │           │   └── factor
-│               │           │       │           │   │           │       ├── ACTION_number
-│               │           │       │           │   │           │       │   └── epsilon
-│               │           │       │           │   │           │       └── (NUM, 1)
-│               │           │       │           │   │           └── ACTION_op
-│               │           │       │           │   │               └── epsilon
-│               │           │       │           │   └── ACTION_assign
-│               │           │       │           │       └── epsilon
-│               │           │       │           ├── (SYMBOL, ;)
-│               │           │       │           └── ACTION_clearassign
+│               │           │       │           │   └── simple_expression
+│               │           │       │           │       ├── additive_expression
+│               │           │       │           │       │   └── term
+│               │           │       │           │       │       └── factor
+│               │           │       │           │       │           └── var
+│               │           │       │           │       │               ├── ACTION_pid
+│               │           │       │           │       │               │   └── epsilon
+│               │           │       │           │       │               └── (ID, k)
+│               │           │       │           │       ├── ACTION_sign
+│               │           │       │           │       │   └── epsilon
+│               │           │       │           │       ├── relop
+│               │           │       │           │       │   └── (SYMBOL, ==)
+│               │           │       │           │       ├── additive_expression
+│               │           │       │           │       │   └── term
+│               │           │       │           │       │       └── factor
+│               │           │       │           │       │           ├── ACTION_number
+│               │           │       │           │       │           │   └── epsilon
+│               │           │       │           │       │           └── (NUM, 6)
+│               │           │       │           │       └── ACTION_op
+│               │           │       │           │           └── epsilon
+│               │           │       │           ├── (SYMBOL, ))
+│               │           │       │           ├── ACTION_save
+│               │           │       │           │   └── epsilon
+│               │           │       │           ├── statement
+│               │           │       │           │   └── compound_stmt
+│               │           │       │           │       ├── (SYMBOL, {)
+│               │           │       │           │       ├── local_declarations
+│               │           │       │           │       │   └── epsilon
+│               │           │       │           │       ├── statement_list
+│               │           │       │           │       │   ├── statement_list
+│               │           │       │           │       │   │   └── epsilon
+│               │           │       │           │       │   └── statement
+│               │           │       │           │       │       └── expression_stmt
+│               │           │       │           │       │           ├── (KEYWORD, break)
+│               │           │       │           │       │           ├── ACTION_break
+│               │           │       │           │       │           │   └── epsilon
+│               │           │       │           │       │           └── (SYMBOL, ;)
+│               │           │       │           │       └── (SYMBOL, })
+│               │           │       │           ├── (KEYWORD, endif)
+│               │           │       │           └── ACTION_jumpif
 │               │           │       │               └── epsilon
 │               │           │       └── (SYMBOL, })
 │               │           ├── ACTION_loopwhile

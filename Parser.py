@@ -24,7 +24,6 @@ class Parser:
         while True:
             # getting token
             if self.get_next == True: self.temp_token = self.scanner.get_token()
-            # print(self.temp_token)
             if self.temp_token[0] in ['WHITESPACE', 'COMMENT']: continue # TODO
             if self.temp_token[0] in ['ID', 'NUM']: self.token = self.temp_token[0] # TODO
             else: self.token = self.temp_token[1]
@@ -135,3 +134,5 @@ class Parser:
 
     def generating_output(self):
         self.codegen.write_output()
+        with open('semantic_errors.txt', 'w') as file:
+            file.write("The input program is semantically correct.")

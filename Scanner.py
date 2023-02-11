@@ -84,7 +84,7 @@ class Scanner(object):
                             else:
                                 self.oneMore()
                                 return 'error', output, 'Invalid input'
-                        elif ord(s) in range(65, 91):
+                        if ord(s) in range(65, 91):
                             output += s
                             if ord(s) in range(65, 91):
                                 self.oneMore()
