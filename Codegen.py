@@ -5,8 +5,8 @@ class Codegen:
         self.symbol_table = {}
         self.current_address, self.temporary_address, self.pointer = 508, 508, 2
         for _ in range(200): self.program_block.append("None")
-        self.program_block[0], self.program_block[1] = "(ASSIGN, #4, 0,   )", "(JP, 2,  ,   )"
-        self.is_break = 0
+        self.program_block[0] = "(ASSIGN, #4, 0,   )"
+        self.is_break, self.is_main = 0, False
 
     def action_choser(self, input, current_token):
         print(input)
@@ -40,7 +40,10 @@ class Codegen:
         self.move_pointer()
 
     def action_pid(self):
-        if self.current_word == 'main': return
+        if self.current_word == 'main': 
+            self.is_main = True
+            self.initial_value()
+            return
         address = self.find_address()
         if address is False: return
         self.scope_stack.append(address)
@@ -86,12 +89,12 @@ class Codegen:
     
     def action_op(self):
         self.get_temporary_memory()
-        temp = str(self.scope_stack[-3])
-        if temp.startswith('@'): static_str = str(self.scope_stack[-1]) + ", " + str(self.scope_stack[-3]) + ", " + str(self.temporary_address) + " )"
-        else: static_str = str(self.scope_stack[-3]) + ", " + str(self.scope_stack[-1]) + ", " + str(self.temporary_address) + " )"
+        
+        dynamic_str = str(self.scope_stack[-1]) + ", " + str(self.scope_stack[-3]) + ", " + str(self.temporary_address) + " )"
+        static_str = str(self.scope_stack[-3]) + ", " + str(self.scope_stack[-1]) + ", " + str(self.temporary_address) + " )"
         if self.scope_stack[-2] == "-": self.program_block[self.pointer] = "(SUB, " + static_str
         elif self.scope_stack[-2] == "+": self.program_block[self.pointer] = "(ADD, " + static_str
-        elif self.scope_stack[-2] == "*": self.program_block[self.pointer] = "(MULT, " + static_str
+        elif self.scope_stack[-2] == "*": self.program_block[self.pointer] = "(MULT, " + dynamic_str
         elif self.scope_stack[-2] == "/": self.program_block[self.pointer] = "(DIV, " + static_str
         elif self.scope_stack[-2] == "<": self.program_block[self.pointer] = "(LT, " + static_str
         elif self.scope_stack[-2] == "==": self.program_block[self.pointer] = "(EQ, " + static_str
@@ -122,6 +125,7 @@ class Codegen:
             self.move_pointer()
             return
         self.current_address = self.symbol_table[list(self.symbol_table.keys())[-1]] + int(self.scope_stack[-1][1:]) * 4
+        if self.is_main is False: self.current_address = self.current_address + 8
         self.scope_stack.pop()
 
     def action_print(self):
@@ -145,8 +149,10 @@ class Codegen:
 
     def find_address(self):
         if self.current_word in self.symbol_table.keys(): return self.symbol_table[self.current_word]
-        self.symbol_table[self.current_word] = self.current_address
-        self.program_block[self.pointer] = "(ASSIGN, #0, " + str(self.current_address) + ",   )"
+        temp = self.current_address
+        if self.is_main is False: temp = temp - 8
+        self.symbol_table[self.current_word] = temp
+        self.program_block[self.pointer] = "(ASSIGN, #0, " + str(temp) + ",   )"
         self.move_pointer()
         self.move_address()
         return False
@@ -168,3 +174,10 @@ class Codegen:
                 if line == "None": continue
                 file.write(str(index) + "\t" + line + "\n")
                 index = index + 1
+
+    def initial_value(self):
+        sum = 0
+        for line in self.program_block:
+                if line == "None": continue
+                sum = sum + 1
+        self.program_block[1] = "(JP, " + str(sum + 1) + ",  ,   )"

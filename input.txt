@@ -1,15 +1,22 @@
-/* sample 5 */
+/* sample 6 */
 
 void main(void)
 {
+    int arr[20];
+    int arrsize;
     int i;
+    int j;
+    int k;
+    arrsize = 20;
     i = 0;
-    while(i < 5){
+    while (i + 1 < arrsize) {
+        j = 0;
+        arr[i] = 2;
         output(i);
-        i = i + 1;
-        if(i == 3){
-            break;
+        while (j < i) {
+            arr[i] = arr[i] * (0-2);
+            j = j + 1;
         }
-        endif
-    }
+        i = i + 1;
+	}
 }
